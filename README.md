@@ -6,3 +6,4 @@ This repository holds materials created for the University of Mary Washington's 
 
 ## Weekly Material
 1. week-01
+2. Week 2: a Prompt Lab web app for testing prompts against Claude, built with Claude Code
