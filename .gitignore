@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Anthropic API key files - never commit
+API Key.txt
+API-Key.txt
+*api*key*.txt
+*API*Key*.txt
