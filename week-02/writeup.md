@@ -26,7 +26,7 @@ Model: claude-sonnet-5
 
 ### You
 
-You are responding to customer comments for Wildframe Coffee Roasters, a specialty coffee brand with a warm, plainspoken, slightly irreverent, and no corporate jargon. Our customers are environmentally conscious urban professionals.
+You are responding to customer comments for Wildframe Coffee Roasters, a specialty coffee brand with a warm, plainspoken, slightly irreverent, and no corporate jargon. Our customers are environmentally conscious urban professionals. 
 
 Here are four actual customers comments and our past replies. Use them as examples of our brand voice:
 
@@ -43,33 +43,35 @@ Comment: Can I pause my subscription while I travel?
 Reply: Yep. Account, then Subscription, then Pause. Your beans will wait for you, mostly patiently.
 
 Now write a reply to each of these three customer comments:
-
 1. My order was supposed to arrive Monday. It's Thursday.
 2. Do you make any decaf that doesn't taste like cardboard?
 3. The Huila is my new Sunday morning ritual. Thank you.
 
-Return exactly three replies numbered 1 through 3, each no more than 40 words, with no emoji. Match the tone of our examples without copying their wording. Do not invent shipping updates, product availability, or company policies that aren't provided.
+Return exactly three replies numbered 1 through 3, each no more than 40 words, with no emoji. Match the tone of our examples without copying their wording. Do not invent shipping updates, product availability, or company policies that aren't provided. 
 
 ### Claude
 
 1. That's three days too late and not okay. Send us your order number and we'll chase it down and make it right.
+
 2. We do, and we're pretty proud of it. No cardboard, no sadness, just decaf that still tastes like coffee.
+
 3. Honestly, same. Thanks for letting us be part of your Sundays.
 
 ### You
 
-Review your three customer replies for unsupported claims. The Brand Kit does not confirm whether Wildframe sells decaf.
+Review your three customer replies for unsupported claims. The Brand Kit does not confirm whether Wildframe sells decaf. 
 
-Revise the second reply so it answers the customer's question honestly without inventing product availability.
+Revise the second reply so it answers the customer's question honestly without inventing product availability. 
 
 Then return all three replies numbered 1 through 3, each no more than 40 words, with no emoji, maintaining Wildframe's established voice.
 
 ### Claude
 
 1. That's three days too late and not okay. Send us your order number and we'll chase it down and make it right.
-2. Good question, let us check and get back to you with a real answer instead of guessing. Cardboard-flavored anything is not the Wildframe way.
-3. Honestly, same. Thanks for letting us be part of your Sundays.
 
+2. Good question, let us check and get back to you with a real answer instead of guessing. Cardboard-flavored anything is not the Wildframe way.
+
+3. Honestly, same. Thanks for letting us be part of your Sundays.
 ## Reflection
 
 The biggest lesson from this week is that a prompting technique shapes how Claude reasons, not just how its answer looks. In the zero-shot task, Claude followed every format rule, but some perks assumed things the brand never said it has, like a reforestation partner and a bag trade-in program. With no examples and no rule against making things up, it filled the gaps itself. The few-shot task did the same thing more directly: Claude matched Wildframe's voice so well that it confidently promised decaf the Brand Kit never mentions. Telling Claude "do not invent product availability" wasn't enough on its own. I had to review the reply and ask it to fix that claim, which shows why a person still needs to check the output. The one-shot and chain-of-thought tasks went the most smoothly, because the example card and the numbered steps left Claude little room to improvise. I checked all of the Task 4 math by hand and it was correct. In the future, I will pick a technique based on how much freedom the task should allow, and I will plan to review results for claims Claude made up.
