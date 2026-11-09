@@ -12,6 +12,11 @@ This is the course repository for **GBUS 562 (AI Language Models)**. The work he
 - GitHub remote: https://github.com/AlesiaHarmon/UMW-GBUS-562-Harmon (branch `main`)
 - Weekly work lives in `week-NN/` folders (e.g. `week-01/` holds the Week 1 Connect 4 game). Keep new assignments in a new week folder and add them to the "Weekly Material" section of `README.md`.
 
+## Python environment
+
+- Always use `.venv` (at the repo root) for running Python and installing packages, e.g. `.\.venv\Scripts\python.exe script.py` and `.\.venv\Scripts\python.exe -m pip install <package>`. Never install packages into the global Python.
+- `.venv` uses Python 3.13 and is git-ignored.
+
 ## Anthropic API key
 
 - The key is stored **outside** this repo at:
