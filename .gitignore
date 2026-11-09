@@ -224,3 +224,6 @@ API Key.txt
 API-Key.txt
 *api*key*.txt
 *API*Key*.txt
+
+# Week 3 Chroma database (rebuilt by week-03/ask.py)
+week-03/chroma_db/

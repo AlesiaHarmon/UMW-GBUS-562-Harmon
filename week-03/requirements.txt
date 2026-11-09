@@ -1,0 +1,5 @@
+anthropic==2.7.0
+chromadb==1.5.9
+beautifulsoup4==4.15.0
+pymupdf==2.1
+python-docx==1.2.0

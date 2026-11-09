@@ -7,3 +7,4 @@ This repository holds materials created for the University of Mary Washington's 
 ## Weekly Work
 1. week-01
 2. Week 2: a Prompt Lab web app for testing prompts against Claude, built with Claude Code
+3. Week 3: a RAG tool that answers questions from Copperline Manufacturing's finance documents, built with Claude Code
