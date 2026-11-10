@@ -1,0 +1,43 @@
+Question: A member deposited a $2,000 paycheck at a branch today. How much of it can they use on the next business day?
+Documents: week-03/larkfield-docs
+Model: claude-sonnet-5
+
+Rank 1 | similarity 0.584 | source: funds-availability-policy.html
+Funds Availability Policy > Check deposits
+About this document: Version 3 (current). Owner: Deposit Operations.
+For checks deposited at a branch or a Larkfield ATM, the first $275 of the day's check deposits is available on the next business day. The rest of the day's check deposits is available on the second business day after the day of deposit.
+
+Rank 2 | similarity 0.538 | source: funds-availability-policy.html
+Funds Availability Policy > Mobile check deposits
+About this document: Version 3 (current). Owner: Deposit Operations.
+Checks deposited with the Larkfield mobile app follow the same availability as checks deposited at a branch. A member can deposit up to $5,000 per business day through the mobile app. Members should keep the paper check for 30 days after a mobile deposit, then destroy it.
+
+Rank 3 | similarity 0.445 | source: consumer-fee-schedule.html
+Consumer Fee Schedule > Official checks and money orders
+About this document: Version 8 (current). Replaces Version 7. Owner: Member Services.
+A cashier's check costs $8. A money order costs $3. Members can buy up to five money orders in one day.
+
+Rank 4 | similarity 0.440 | source: funds-availability-policy.html
+Funds Availability Policy > Business days and cutoff times
+About this document: Version 3 (current). Owner: Deposit Operations.
+A business day is Monday through Friday, except federal holidays. A deposit made before 5 p.m. on a business day is received that day. A deposit made after 5 p.m., or on a weekend or holiday, is received on the next business day.
+
+Rank 5 | similarity 0.432 | source: funds-availability-policy.html (related section from the rank 1 document)
+Funds Availability Policy > Longer holds
+About this document: Version 3 (current). Owner: Deposit Operations.
+Larkfield may hold check deposits for up to seven business days when the day's check deposits total more than $6,000, when the account has been open fewer than 30 days, when the account has been overdrawn repeatedly in the last six months, or when there is reason to doubt the check will be paid. The member is told about a longer hold when the deposit is made, or by mail if the hold is placed later.
+
+Rank 6 | similarity 0.422 | source: funds-availability-policy.html (related section from the rank 1 document)
+Funds Availability Policy > Cash, direct deposits, and wire transfers
+About this document: Version 3 (current). Owner: Deposit Operations.
+Cash deposited at a branch, direct deposits such as payroll, and incoming wire transfers are available on the business day they are received.
+
+ANSWER
+Based on the sources, this depends on how the deposit is received and on a few conditions:
+
+- If it's deposited as a **check** at a branch (rather than electronically as a direct deposit), the first **$275** is available on the next business day, with the remaining $1,725 available on the second business day after deposit [funds-availability-policy.html].
+- This assumes the deposit is made before 5 p.m. on a business day; otherwise it's treated as received the next business day [funds-availability-policy.html].
+- A longer hold (up to seven business days) could apply instead if the account has been open fewer than 30 days, has had repeated overdrafts in the last six months, or there's reason to doubt the check will be paid — the sources don't say whether any of these apply here [funds-availability-policy.html].
+- If the $2,000 was instead a **direct deposit** (e.g., payroll sent electronically) rather than a check brought to the branch, the full amount would be available the same business day it was received [funds-availability-policy.html].
+
+The sources don't specify which type of deposit this is, so the exact answer depends on that detail.

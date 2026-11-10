@@ -1,0 +1,41 @@
+Question: What is the current rate on a 30-year fixed mortgage?
+Documents: week-03/larkfield-docs
+Model: claude-sonnet-5
+
+Rank 1 | similarity 0.267 | source: share-certificates.html
+Share Certificates > Dividend rates
+About this document: Version 5 (current). Owner: Deposit Products.
+- 6-month share certificate: 3.05% annual percentage yield (APY).
+- 12-month share certificate: 3.40% APY.
+- 24-month share certificate: 3.55% APY.
+- 36-month share certificate: 3.60% APY.
+- 60-month share certificate: 3.75% APY.
+The rate is fixed when the certificate is opened and does not change during the term. Dividends are paid monthly and can stay in the certificate or be transferred to the member's savings or checking account.
+
+Rank 2 | similarity 0.264 | source: consumer-fee-schedule.html
+Consumer Fee Schedule > Stop payments
+About this document: Version 8 (current). Replaces Version 7. Owner: Member Services.
+A stop payment on a check costs $30 per request. One request can cover a single check or a series of checks with consecutive numbers. A stop payment stays in effect for six months and can be renewed for another $30.
+
+Rank 3 | similarity 0.245 | source: consumer-fee-schedule.html
+Consumer Fee Schedule > Checking account monthly fees
+About this document: Version 8 (current). Replaces Version 7. Owner: Member Services.
+Everyday Checking has no monthly service fee. Plus Checking has a monthly service fee of $8. The Plus Checking fee is waived for any month in which the account keeps a minimum daily balance of $1,000, or receives direct deposits totaling $500 or more.
+
+Rank 4 | similarity 0.202 | source: share-certificates.html
+Share Certificates > At maturity
+About this document: Version 5 (current). Owner: Deposit Products.
+When a share certificate matures, it renews automatically for the same term at the rate in effect on the renewal day. The member has a 10-day grace period after maturity to withdraw the money or change the term with no penalty.
+
+Rank 5 | similarity 0.186 | source: share-certificates.html (related section from the rank 1 document)
+Share Certificates > Terms and minimum deposit
+About this document: Version 5 (current). Owner: Deposit Products.
+Larkfield offers share certificates with terms of 6, 12, 24, 36, and 60 months. The minimum opening deposit for any share certificate is $500. A member can hold any number of share certificates.
+
+Rank 6 | similarity 0.107 | source: share-certificates.html (related section from the rank 1 document)
+Share Certificates > What a share certificate is
+About this document: Version 5 (current). Owner: Deposit Products.
+A share certificate is a savings account that pays a fixed dividend rate for a fixed term. In exchange for the higher rate, the member agrees to leave the money in the certificate until the term ends, which is called maturity. Share certificates are federally insured up to the legal limit, like other Larkfield savings accounts.
+
+ANSWER
+The provided documents don't answer this question — they cover share certificate dividend rates, stop payment fees, and checking account fees, but do not mention mortgage rates [share-certificates.html] [consumer-fee-schedule.html].

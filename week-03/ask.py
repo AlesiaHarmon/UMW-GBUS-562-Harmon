@@ -1,14 +1,17 @@
-"""Answer questions about Copperline Manufacturing's finance documents with RAG.
+"""Answer questions about a folder of policy documents with RAG.
 
-The documents in copperline-docs/ are split into self-contained chunks (one per
-section), stored in a local Chroma database, and the most relevant chunks are
-sent to Claude along with the question.
+The documents in a folder (copperline-docs/ by default) are split into
+self-contained chunks (one per section), stored in a local Chroma database,
+and the most relevant chunks are sent to Claude along with the question.
+Each document folder gets its own database under week-03/chroma_db/.
 
 Usage, from the top of the repository:
     .venv\\Scripts\\python.exe week-03\\ask.py "Can I expense a $70 dinner in Chicago?"
     .venv\\Scripts\\python.exe week-03\\ask.py                 (ask several questions)
     .venv\\Scripts\\python.exe week-03\\ask.py --rebuild       (re-read the documents)
     .venv\\Scripts\\python.exe week-03\\ask.py --list-chunks   (show every chunk)
+    .venv\\Scripts\\python.exe week-03\\ask.py --docs week-03\\larkfield-docs "question"
+    .venv\\Scripts\\python.exe week-03\\ask.py "question" --save week-03\\runs\\q1.txt
 
 The database is rebuilt automatically when documents are added, removed or
 changed; --rebuild forces it.
@@ -34,15 +37,19 @@ from docx.text.paragraph import Paragraph
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parent
-DOCS_DIR = HERE / "copperline-docs"
-DB_DIR = HERE / "chroma_db"
-COLLECTION = "copperline_docs"
+DEFAULT_DOCS_DIR = HERE / "copperline-docs"
+DB_ROOT = HERE / "chroma_db"  # one database per document folder inside this
+COLLECTION = "documents"
 
 # The key lives next to the repository, never inside it.
 KEY_FILES = [REPO_ROOT.parent / "API-Key.txt", REPO_ROOT.parent / "API Key.txt"]
 
 MODEL = "claude-sonnet-5"
 TOP_K = 4
+# Extra sections taken from the top result's document. A rule's conditions and
+# exceptions (cutoff times, longer holds, approval limits) usually sit in other
+# sections of the same policy and share few words with the question.
+RELATED_K = 2
 PREVIEW_CHARS = 150
 MAX_CHUNK_CHARS = 1500  # longer sections are split into parts
 CHUNKER_VERSION = "2"  # bump when the chunking logic changes, to force a rebuild
@@ -64,11 +71,12 @@ CONTEXT_NOTES = [
     },
 ]
 
-SYSTEM_PROMPT = """You answer questions from Copperline Manufacturing employees about company finance policies.
+SYSTEM_PROMPT = """You answer questions about an organization's policy documents.
 
 Answer using only the sources in the user's message:
 - State only facts that appear in the sources. Do not use outside knowledge or assume what a policy probably says.
 - After each fact, cite the source file it came from in square brackets, for example [travel-expense-policy.html].
+- If the sources give conditions, exceptions, cutoff times, or limits that could change the answer, include them with citations. When the answer depends on something the question doesn't say (for example the time of day or the type of account), say how.
 - If the sources do not contain the answer, say that the provided documents don't answer the question, and don't guess. If they answer only part of it, answer that part and say what is missing.
 - Keep the answer short and direct."""
 
@@ -321,15 +329,15 @@ def make_chunks(rel_path, blocks, fallback_title):
     return chunks
 
 
-def find_documents():
-    return sorted(p for p in DOCS_DIR.rglob("*")
+def find_documents(docs_dir):
+    return sorted(p for p in docs_dir.rglob("*")
                   if p.is_file() and p.suffix.lower() in LOADERS)
 
 
-def chunk_all(files):
+def chunk_all(files, docs_dir):
     chunks = []
     for path in files:
-        rel_path = path.relative_to(DOCS_DIR).as_posix()
+        rel_path = path.relative_to(docs_dir).as_posix()
         try:
             blocks, fallback_title = LOADERS[path.suffix.lower()](path)
         except Exception as exc:
@@ -345,17 +353,26 @@ def chunk_all(files):
 # Chroma database
 # ---------------------------------------------------------------------------
 
-def fingerprint(files):
+def fingerprint(files, docs_dir):
     """Changes whenever a document, the notes or the chunker changes."""
     digest = hashlib.sha256(CHUNKER_VERSION.encode())
     digest.update(json.dumps(CONTEXT_NOTES, sort_keys=True).encode())
     for path in files:
         stat = path.stat()
-        digest.update(f"{path.relative_to(DOCS_DIR).as_posix()}|{stat.st_size}|{stat.st_mtime_ns}".encode())
+        digest.update(f"{path.relative_to(docs_dir).as_posix()}|{stat.st_size}|{stat.st_mtime_ns}".encode())
     return digest.hexdigest()
 
 
-def build_index(db, files, fp):
+def db_dir_for(docs_dir):
+    """The database folder for a document folder, e.g. chroma_db/larkfield-docs-1a2b3c4d.
+
+    The short hash of the full path keeps two folders with the same name apart.
+    """
+    path_hash = hashlib.sha256(str(docs_dir).lower().encode()).hexdigest()[:8]
+    return DB_ROOT / f"{docs_dir.name}-{path_hash}"
+
+
+def build_index(db, files, fp, docs_dir):
     if COLLECTION in [c.name for c in db.list_collections()]:
         db.delete_collection(COLLECTION)
     # Chroma's default embedding model (all-MiniLM-L6-v2) is used because no
@@ -365,7 +382,7 @@ def build_index(db, files, fp):
         configuration={"hnsw": {"space": "cosine"}},
         metadata={"fingerprint": fp},
     )
-    chunks = chunk_all(files)
+    chunks = chunk_all(files, docs_dir)
     if chunks:
         collection.add(
             ids=[f"{c['source']}::{i}" for i, c in enumerate(chunks)],
@@ -376,12 +393,16 @@ def build_index(db, files, fp):
     return collection
 
 
-def open_index(rebuild=False):
-    files = find_documents()
+def open_index(docs_dir, rebuild=False):
+    if not docs_dir.is_dir():
+        sys.exit(f"Document folder not found: {docs_dir}")
+    files = find_documents(docs_dir)
     if not files:
-        sys.exit(f"No supported documents found in {DOCS_DIR}")
-    fp = fingerprint(files)
-    db = chromadb.PersistentClient(path=str(DB_DIR), settings=Settings(anonymized_telemetry=False))
+        sys.exit(f"No supported documents found in {docs_dir}")
+    fp = fingerprint(files, docs_dir)
+    db_dir = db_dir_for(docs_dir)
+    db = chromadb.PersistentClient(path=str(db_dir), settings=Settings(anonymized_telemetry=False))
+    print(f"Documents: {display_path(docs_dir)}   Database: {display_path(db_dir)}")
 
     reason = "rebuild requested" if rebuild else None
     if not reason:
@@ -393,32 +414,66 @@ def open_index(rebuild=False):
                 reason = "documents changed"
     if reason:
         print(f"Building the document database ({reason})...")
-        return build_index(db, files, fp)
+        return build_index(db, files, fp, docs_dir)
+    print()
     return collection
+
+
+def display_path(path):
+    """A path relative to the repository when possible, for readable output."""
+    try:
+        return path.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return str(path)
 
 
 # ---------------------------------------------------------------------------
 # Retrieval and answering
 # ---------------------------------------------------------------------------
 
-def retrieve(collection, question):
+def search(collection, question, n_results, where=None):
     result = collection.query(
         query_texts=[question],
-        n_results=min(TOP_K, collection.count()),
+        n_results=n_results,
+        where=where,
         include=["documents", "metadatas", "distances"],
     )
     return [
-        {"rank": rank, "similarity": 1 - distance, "source": meta["source"], "text": text}
-        for rank, (text, meta, distance) in enumerate(
-            zip(result["documents"][0], result["metadatas"][0], result["distances"][0]), start=1)
+        {"id": chunk_id, "similarity": 1 - distance, "source": meta["source"], "text": text}
+        for chunk_id, text, meta, distance in zip(
+            result["ids"][0], result["documents"][0], result["metadatas"][0], result["distances"][0])
     ]
 
 
+def retrieve(collection, question):
+    """The TOP_K best chunks, then up to RELATED_K more sections of the rank 1 document."""
+    hits = search(collection, question, min(TOP_K, collection.count()))
+    for hit in hits:
+        hit["related"] = False
+    if hits and RELATED_K:
+        top_source = hits[0]["source"]
+        seen = {hit["id"] for hit in hits}
+        doc_size = len(collection.get(where={"source": top_source}, include=[])["ids"])
+        candidates = search(collection, question, doc_size, where={"source": top_source})
+        related = [c for c in candidates if c["id"] not in seen][:RELATED_K]
+        for hit in related:
+            hit["related"] = True
+        hits += related
+    for rank, hit in enumerate(hits, start=1):
+        hit["rank"] = rank
+    return hits
+
+
+def hit_label(hit):
+    return " (related section from the rank 1 document)" if hit["related"] else ""
+
+
 def print_sources(hits):
-    print(f"Top {len(hits)} sources:")
+    top = sum(not hit["related"] for hit in hits)
+    print(f"Top {top} sources, plus {len(hits) - top} related sections:")
     for hit in hits:
         preview = clean(hit["text"])[:PREVIEW_CHARS]
-        print(f"  {hit['rank']}. similarity {hit['similarity']:.3f}  {hit['source']}")
+        print(f"  {hit['rank']}. similarity {hit['similarity']:.3f}  {hit['source']}{hit_label(hit)}")
         print(f"     {preview}...")
     print()
 
@@ -441,6 +496,7 @@ def ask_claude(client, question, hits):
 
 
 def answer(collection, client, question):
+    """Print the retrieved sources and Claude's answer; return both, or None on an API error."""
     hits = retrieve(collection, question)
     print_sources(hits)
     try:
@@ -449,16 +505,37 @@ def answer(collection, client, question):
         sys.exit("Claude rejected the API key. Check the key file next to the repository.")
     except anthropic.RateLimitError:
         print("Rate limit reached. Wait a moment and ask again.\n")
-        return
+        return None
     except anthropic.APIStatusError as exc:
         print(f"Claude API error {exc.status_code}: {exc.message}\n")
-        return
+        return None
     except anthropic.APIConnectionError:
         print("Could not reach the Claude API. Check your internet connection.\n")
-        return
+        return None
     print("Answer:")
     print(reply)
     print()
+    return hits, reply
+
+
+def save_run(path, question, docs_dir, hits, reply):
+    """Save the full retrieved chunks, then a line containing only ANSWER, then the answer."""
+    lines = [
+        f"Question: {question}",
+        f"Documents: {display_path(docs_dir)}",
+        f"Model: {MODEL}",
+        "",
+    ]
+    for hit in hits:
+        lines += [
+            f"Rank {hit['rank']} | similarity {hit['similarity']:.3f} | source: {hit['source']}{hit_label(hit)}",
+            hit["text"],
+            "",
+        ]
+    lines += ["ANSWER", reply, ""]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Saved to {display_path(path)}")
 
 
 def load_api_key():
@@ -476,15 +553,24 @@ def load_api_key():
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(
-        description="Answer questions about Copperline Manufacturing's finance documents.")
+        description="Answer questions about a folder of policy documents.")
     parser.add_argument("question", nargs="*", help="the question to ask (omit to ask several)")
+    parser.add_argument("--docs", type=Path, default=DEFAULT_DOCS_DIR,
+                        help="document folder to search (default: week-03/copperline-docs)")
+    parser.add_argument("--save", type=Path, metavar="FILE",
+                        help="also save the retrieved chunks and the answer to FILE (UTF-8)")
     parser.add_argument("--rebuild", action="store_true",
                         help="re-read every document and rebuild the database")
     parser.add_argument("--list-chunks", action="store_true",
                         help="print every chunk in the database and exit")
     args = parser.parse_args()
 
-    collection = open_index(rebuild=args.rebuild)
+    question = " ".join(args.question).strip()
+    if args.save and not question:
+        parser.error("--save needs a question on the command line")
+
+    docs_dir = args.docs.resolve()
+    collection = open_index(docs_dir, rebuild=args.rebuild)
 
     if args.list_chunks:
         stored = collection.get(include=["documents", "metadatas"])
@@ -493,16 +579,19 @@ def main():
             print(f"=== {chunk_id}\n{text}\n")
         return
 
-    question = " ".join(args.question).strip()
     if args.rebuild and not question:
         return
 
     client = anthropic.Anthropic(api_key=load_api_key())
     if question:
-        answer(collection, client, question)
+        result = answer(collection, client, question)
+        if result is None:
+            sys.exit(1)
+        if args.save:
+            save_run(args.save.resolve(), question, docs_dir, *result)
         return
 
-    print("Ask a question about Copperline's finance documents (press Enter on a blank line to quit).")
+    print("Ask a question about these documents (press Enter on a blank line to quit).")
     while True:
         try:
             question = input("\nQuestion: ").strip()
