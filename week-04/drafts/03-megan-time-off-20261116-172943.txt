@@ -1,0 +1,28 @@
+DRAFT - NOT SENT
+To: Megan Turner <megan.turner@hartwellfoods.example>
+Subject: Re: Family trip
+Needs human review: no
+Source email: week-04/hartwell-hr/sample-emails/03-megan-time-off.eml
+Model: claude-sonnet-5
+
+Hi Megan,
+
+Thanks for reaching out, and a family trip sounds great!
+
+I checked your balance: you currently have 7 vacation days left. Since you're hoping to take 10 business days in a row, that's 3 days more than you have available.
+
+Here's what you can do, per our Vacation and Time Off Policy (leave-policy.html):
+- You can request up to 5 days of unpaid leave to cover a shortfall like this. Unpaid leave needs approval from both your manager and HR.
+- In your case, you'd only need to request 3 unpaid days to cover the gap, combined with your 7 vacation days, to get the full 10 days off.
+
+On timing: since this is a request for more than 5 consecutive business days, it needs your manager's approval at least 10 business days ahead of the start date (per the "Requesting vacation" section of the same policy). Since your trip is about two months out, you have plenty of time, but I'd recommend submitting the request soon so your manager and HR can process the unpaid leave portion as well.
+
+Steps:
+1. Submit your vacation request for the trip dates.
+2. Note that you'd like to apply 7 vacation days + 3 unpaid leave days.
+3. Get sign-off from your manager, and HR will need to approve the unpaid portion too.
+
+Let me know if you'd like help with the request form, and congrats on planning the trip!
+
+Best,
+HR Team

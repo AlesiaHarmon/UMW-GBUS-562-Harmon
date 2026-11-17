@@ -227,3 +227,7 @@ API-Key.txt
 
 # Week 3 Chroma database (rebuilt by week-03/ask.py)
 week-03/chroma_db/
+
+# Week 4 Chroma database (rebuilt by week-04/hr_mcp_server.py)
+week-04/chroma_db/
+week-04/drafts/server.log

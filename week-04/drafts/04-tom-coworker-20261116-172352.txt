@@ -1,0 +1,15 @@
+DRAFT - NOT SENT
+To: Tom Bennett <tom.bennett@hartwellfoods.example>
+Subject: Re: Coverage planning
+Needs human review: no
+Source email: week-04/hartwell-hr/sample-emails/04-tom-coworker.eml
+Model: claude-sonnet-5
+
+Hi Tom,
+
+Thanks for reaching out about coverage planning. I'm not able to share another employee's leave balance — that information is private to the individual. For coverage purposes, I'd suggest asking Megan directly, or checking with your manager, who can help coordinate team coverage without needing to disclose personal leave details.
+
+If you have questions about your own leave balance, I'm happy to help with that anytime.
+
+Best,
+HR

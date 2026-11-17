@@ -32,3 +32,10 @@ This is the course repository for **GBUS 562 (AI Language Models)**. The work he
 - If a local `.env` file is used, it must stay git-ignored (it already is via `.gitignore`).
 - Before every commit, check the staged diff (`git diff --cached`) to confirm no key (strings starting with `sk-ant-`) is included.
 - Don't print the key's value in terminal output; only confirm it loaded.
+
+## Agent email file
+
+- `Agent-Email.txt` lives **outside** this repo, in the folder above it (relative to the repo: `../Agent-Email.txt`).
+- Programs in this repo may read it at run time.
+- **Never open, read, or print it yourself** (no Read, `cat`, `Get-Content`, or similar), and never copy it into this repo.
+- **Never write its contents to any file**, including source code, drafts, logs, README files, artifacts, and commit messages.
