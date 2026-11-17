@@ -1,0 +1,29 @@
+Sender: logan.brooks@ridgelinehotels.example
+Subject: Days off
+Organization: ridgeline-hotels
+Email file: week-04/ridgeline-hotels/sample-emails/07-logan-seasonal.eml
+
+Tools: search_policy, get_leave_balance, save_reply
+
+Step 1: get_leave_balance
+  Input: {}
+  Result (error): Error executing tool get_leave_balance: No employee record matches the employee this session is for. Do not state, estimate, or guess a leave balance. Say that the balance could not be found and that a person from HR will follow up.
+
+Step 2: save_reply
+  Input: {"reply": "Hi Logan,\n\nThanks for reaching out! I tried to look up your current PTO balance, but I wasn't able to find a matching employee record in our system to pull that information. I don't want to guess, so I've flagged this for a member of our People and Culture team to look into and get you the correct number directly.\n\nThanks for your patience, and sorry for the inconvenience!\n\nBest,\nHR Assistant, Ridgeline Hotels", "needs_human_review": true}
+  Result: Draft saved to week-04/drafts/ridgeline-hotels/07-logan-seasonal-20261116-201417.txt. Nothing was sent.
+
+Stopped: Draft saved.
+
+DRAFT
+Hi Logan,
+
+Thanks for reaching out! I tried to look up your current PTO balance, but I wasn't able to find a matching employee record in our system to pull that information. I don't want to guess, so I've flagged this for a member of our People and Culture team to look into and get you the correct number directly.
+
+Thanks for your patience, and sorry for the inconvenience!
+
+Best,
+HR Assistant, Ridgeline Hotels
+Needs human review: true
+
+Tokens: 2803 input, 276 output

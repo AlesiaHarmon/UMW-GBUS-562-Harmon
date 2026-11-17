@@ -1,0 +1,39 @@
+Sender: kevin.walsh@ridgelinehotels.example
+Subject: Time off for a funeral
+Organization: ridgeline-hotels
+Email file: week-04/ridgeline-hotels/sample-emails/02-kevin-bereavement.eml
+
+Tools: search_policy, get_leave_balance, save_reply
+
+Step 1: search_policy
+  Input: {"query": "bereavement leave for grandparent funeral"}
+  Result: { "results": [ { "rank": 1, "source": "bereavement-and-family-leave.html", "section": "Bereavement leave", "similarity": 0.711, "text": "Bereavement and Family Leave > Bereavement leave\nAbout this document: Effective this year. Owner: People and Culture.\nAfter the death of a spouse or partner, chi...
+
+Step 2: get_leave_balance
+  Input: {}
+  Result: { "email": "kevin.walsh@ridgelinehotels.example", "name": "Kevin Walsh", "pto_days_remaining": 10, "sick_days_remaining": 6 }
+
+Step 3: save_reply
+  Input: {"reply": "Hi Kevin,\n\nI'm very sorry for the loss of your grandmother.\n\nAccording to our Bereavement and Family Leave policy, after the death of a grandparent you're entitled to up to 3 paid days off. These days don't need to be taken consecutively, but should be used within 60 days, and this leave doesn't reduce your PTO or sick balance (source: bereavement-and-family-leave.html).\n\nTo use this leave, just let your supervisor know as soon as you can — no documentation is required (source: bereavement-and-family-leave.html).\n\nFor reference, you currently also have 10 PTO days and 6 sick days remaining, in case you'd like to take additional time beyond the 3 paid bereavement days.\n\nWishing you and your family comfort during this time.\n\nBest,\nPeople and Culture Team\n", "needs_human_review": false}
+  Result: Draft saved to week-04/drafts/ridgeline-hotels/02-kevin-bereavement-20261116-200455.txt. Nothing was sent.
+
+Stopped: Draft saved.
+
+DRAFT
+Hi Kevin,
+
+I'm very sorry for the loss of your grandmother.
+
+According to our Bereavement and Family Leave policy, after the death of a grandparent you're entitled to up to 3 paid days off. These days don't need to be taken consecutively, but should be used within 60 days, and this leave doesn't reduce your PTO or sick balance (source: bereavement-and-family-leave.html).
+
+To use this leave, just let your supervisor know as soon as you can — no documentation is required (source: bereavement-and-family-leave.html).
+
+For reference, you currently also have 10 PTO days and 6 sick days remaining, in case you'd like to take additional time beyond the 3 paid bereavement days.
+
+Wishing you and your family comfort during this time.
+
+Best,
+People and Culture Team
+Needs human review: false
+
+Tokens: 3727 input, 480 output

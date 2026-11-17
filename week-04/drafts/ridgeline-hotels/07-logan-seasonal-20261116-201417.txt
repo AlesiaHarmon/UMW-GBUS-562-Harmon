@@ -1,0 +1,16 @@
+DRAFT - NOT SENT
+To: Logan Brooks <logan.brooks@ridgelinehotels.example>
+Subject: [NEEDS HR REVIEW] Re: Days off
+Needs human review: true
+Organization: ridgeline-hotels
+Source email: week-04/ridgeline-hotels/sample-emails/07-logan-seasonal.eml
+Model: claude-sonnet-5
+
+Hi Logan,
+
+Thanks for reaching out! I tried to look up your current PTO balance, but I wasn't able to find a matching employee record in our system to pull that information. I don't want to guess, so I've flagged this for a member of our People and Culture team to look into and get you the correct number directly.
+
+Thanks for your patience, and sorry for the inconvenience!
+
+Best,
+HR Assistant, Ridgeline Hotels

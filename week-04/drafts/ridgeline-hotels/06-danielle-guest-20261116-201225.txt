@@ -1,0 +1,18 @@
+DRAFT - NOT SENT
+To: Danielle Price <danielle.price@ridgelinehotels.example>
+Subject: [NEEDS HR REVIEW] Re: A guest
+Needs human review: true
+Organization: ridgeline-hotels
+Source email: week-04/ridgeline-hotels/sample-emails/06-danielle-guest.eml
+Model: claude-sonnet-5
+
+Hi Danielle,
+
+Thank you for telling us about this, and I'm so sorry you're going through it. What you're describing is not okay, and you shouldn't have to just "avoid the room" or dread coming to work.
+
+I'm flagging this directly to a member of the People and Culture team, who will follow up with you personally and promptly to look into this further. In the meantime, per our Reporting Concerns and Workplace Safety policy (reporting-concerns-and-safety.html), you're welcome to also contact People and Culture directly or use the confidential Team Member Line if you'd like to talk to someone right away.
+
+You did the right thing by speaking up, and Ridgeline does not tolerate this kind of behavior from guests or coworkers. Someone will be in touch with you very soon.
+
+Take care,
+HR Assistant (on behalf of People and Culture)

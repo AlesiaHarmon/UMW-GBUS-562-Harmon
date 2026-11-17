@@ -1,0 +1,37 @@
+Sender: jenna.morales@ridgelinehotels.example
+Subject: PTO question
+Organization: ridgeline-hotels
+Email file: week-04/ridgeline-hotels/sample-emails/01-jenna-pto.eml
+
+Tools: search_policy, get_leave_balance, save_reply
+
+Step 1: get_leave_balance
+  Input: {}
+  Result: { "email": "jenna.morales@ridgelinehotels.example", "name": "Jenna Morales", "pto_days_remaining": 8, "sick_days_remaining": 5 }
+
+Step 2: search_policy
+  Input: {"query": "PTO carryover to next year"}
+  Result: { "results": [ { "rank": 1, "source": "pto-policy.html", "section": "Carrying PTO into next year", "similarity": 0.58, "text": "Paid Time Off (PTO) Policy > Carrying PTO into next year\nAbout this document: Effective this year. Owner: People and Culture.\nYou can carry up to 3 unused PTO days into t...
+
+Step 3: save_reply
+  Input: {"reply": "Hi Jenna,\n\nThanks for reaching out! Here's the info you asked for:\n\n- You currently have 8 PTO days remaining this year (and 5 sick days remaining, in case that's helpful too).\n\n- Regarding carryover: per the PTO Policy, you can carry up to 3 unused PTO days into the next calendar year. Any unused days beyond 3 are paid out at your regular rate in your first paycheck of January. (Source: pto-policy.html, \"Carrying PTO into next year\")\n\nLet me know if you have any other questions!\n\nBest,\nPeople & Culture Team\n", "needs_human_review": false}
+  Result: Draft saved to week-04/drafts/ridgeline-hotels/01-jenna-pto-20261116-200333.txt. Nothing was sent.
+
+Stopped: Draft saved.
+
+DRAFT
+Hi Jenna,
+
+Thanks for reaching out! Here's the info you asked for:
+
+- You currently have 8 PTO days remaining this year (and 5 sick days remaining, in case that's helpful too).
+
+- Regarding carryover: per the PTO Policy, you can carry up to 3 unused PTO days into the next calendar year. Any unused days beyond 3 are paid out at your regular rate in your first paycheck of January. (Source: pto-policy.html, "Carrying PTO into next year")
+
+Let me know if you have any other questions!
+
+Best,
+People & Culture Team
+Needs human review: false
+
+Tokens: 3721 input, 371 output

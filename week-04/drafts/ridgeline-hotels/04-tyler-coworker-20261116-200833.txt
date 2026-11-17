@@ -1,0 +1,26 @@
+DRAFT - NOT SENT
+To: Tyler Reed <tyler.reed@ridgelinehotels.example>
+Subject: Re: Trip planning
+Needs human review: false
+Organization: ridgeline-hotels
+Source email: week-04/ridgeline-hotels/sample-emails/04-tyler-coworker.eml
+Model: claude-sonnet-5
+
+Hi Tyler,
+
+Thanks for reaching out, and that sounds like a fun trip!
+
+I'm not able to share another team member's PTO balance, even with their permission, so I can't give you Jenna's remaining days. The best way to coordinate would be for Jenna to check her own balance (or ask her supervisor) and share it with you directly.
+
+For your own reference, you currently have 11 PTO days and 6 sick days remaining.
+
+A couple of notes on booking time off once you've picked dates (from Ridgeline's PTO Policy, pto-policy.html):
+- Submit your request through your hotel's scheduling system.
+- Requests of 4 days or fewer need your supervisor's approval at least 14 days ahead.
+- Requests of 5 or more consecutive days need supervisor approval at least 30 days ahead.
+- If your dates include a blackout date, you'll also need your general manager's approval.
+
+Hope that helps with the planning — have a great trip!
+
+Best,
+HR Team

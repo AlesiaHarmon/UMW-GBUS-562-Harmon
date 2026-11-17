@@ -1,0 +1,31 @@
+Sender: danielle.price@ridgelinehotels.example
+Subject: A guest
+Organization: ridgeline-hotels
+Email file: week-04/ridgeline-hotels/sample-emails/06-danielle-guest.eml
+
+Tools: search_policy, get_leave_balance, save_reply
+
+Step 1: search_policy
+  Input: {"query": "reporting harassment guest safety concern"}
+  Result: { "results": [ { "rank": 1, "source": "reporting-concerns-and-safety.html", "section": "Harassment by guests or coworkers", "similarity": 0.707, "text": "Reporting Concerns and Workplace Safety > Harassment by guests or coworkers\nAbout this document: Effective this year. Owner: People and Culture.\...
+
+Step 2: save_reply
+  Input: {"reply": "Hi Danielle,\n\nThank you for telling us about this, and I'm so sorry you're going through it. What you're describing is not okay, and you shouldn't have to just \"avoid the room\" or dread coming to work.\n\nI'm flagging this directly to a member of the People and Culture team, who will follow up with you personally and promptly to look into this further. In the meantime, per our Reporting Concerns and Workplace Safety policy (reporting-concerns-and-safety.html), you're welcome to also contact People and Culture directly or use the confidential Team Member Line if you'd like to talk to someone right away.\n\nYou did the right thing by speaking up, and Ridgeline does not tolerate this kind of behavior from guests or coworkers. Someone will be in touch with you very soon.\n\nTake care,\nHR Assistant (on behalf of People and Culture)\n", "needs_human_review": true}
+  Result: Draft saved to week-04/drafts/ridgeline-hotels/06-danielle-guest-20261116-201225.txt. Nothing was sent.
+
+Stopped: Draft saved.
+
+DRAFT
+Hi Danielle,
+
+Thank you for telling us about this, and I'm so sorry you're going through it. What you're describing is not okay, and you shouldn't have to just "avoid the room" or dread coming to work.
+
+I'm flagging this directly to a member of the People and Culture team, who will follow up with you personally and promptly to look into this further. In the meantime, per our Reporting Concerns and Workplace Safety policy (reporting-concerns-and-safety.html), you're welcome to also contact People and Culture directly or use the confidential Team Member Line if you'd like to talk to someone right away.
+
+You did the right thing by speaking up, and Ridgeline does not tolerate this kind of behavior from guests or coworkers. Someone will be in touch with you very soon.
+
+Take care,
+HR Assistant (on behalf of People and Culture)
+Needs human review: true
+
+Tokens: 3776 input, 593 output

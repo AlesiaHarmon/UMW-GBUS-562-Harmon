@@ -1,0 +1,43 @@
+Sender: tyler.reed@ridgelinehotels.example
+Subject: Trip planning
+Organization: ridgeline-hotels
+Email file: week-04/ridgeline-hotels/sample-emails/04-tyler-coworker.eml
+
+Tools: search_policy, get_leave_balance, save_reply
+
+Step 1: get_leave_balance
+  Input: {}
+  Result: { "email": "tyler.reed@ridgelinehotels.example", "name": "Tyler Reed", "pto_days_remaining": 11, "sick_days_remaining": 6 }
+
+Step 2: search_policy
+  Input: {"query": "requesting PTO days off process"}
+  Result: { "results": [ { "rank": 1, "source": "pto-policy.html", "section": "Requesting PTO", "similarity": 0.775, "text": "Paid Time Off (PTO) Policy > Requesting PTO\nAbout this document: Effective this year. Owner: People and Culture.\nRequest PTO through your hotel's scheduling system. Requests of 4 day...
+
+Step 3: save_reply
+  Input: {"reply": "Hi Tyler,\n\nThanks for reaching out, and that sounds like a fun trip!\n\nI'm not able to share another team member's PTO balance, even with their permission, so I can't give you Jenna's remaining days. The best way to coordinate would be for Jenna to check her own balance (or ask her supervisor) and share it with you directly.\n\nFor your own reference, you currently have 11 PTO days and 6 sick days remaining.\n\nA couple of notes on booking time off once you've picked dates (from Ridgeline's PTO Policy, pto-policy.html):\n- Submit your request through your hotel's scheduling system.\n- Requests of 4 days or fewer need your supervisor's approval at least 14 days ahead.\n- Requests of 5 or more consecutive days need supervisor approval at least 30 days ahead.\n- If your dates include a blackout date, you'll also need your general manager's approval.\n\nHope that helps with the planning — have a great trip!\n\nBest,\nHR Team\n", "needs_human_review": false}
+  Result: Draft saved to week-04/drafts/ridgeline-hotels/04-tyler-coworker-20261116-200833.txt. Nothing was sent.
+
+Stopped: Draft saved.
+
+DRAFT
+Hi Tyler,
+
+Thanks for reaching out, and that sounds like a fun trip!
+
+I'm not able to share another team member's PTO balance, even with their permission, so I can't give you Jenna's remaining days. The best way to coordinate would be for Jenna to check her own balance (or ask her supervisor) and share it with you directly.
+
+For your own reference, you currently have 11 PTO days and 6 sick days remaining.
+
+A couple of notes on booking time off once you've picked dates (from Ridgeline's PTO Policy, pto-policy.html):
+- Submit your request through your hotel's scheduling system.
+- Requests of 4 days or fewer need your supervisor's approval at least 14 days ahead.
+- Requests of 5 or more consecutive days need supervisor approval at least 30 days ahead.
+- If your dates include a blackout date, you'll also need your general manager's approval.
+
+Hope that helps with the planning — have a great trip!
+
+Best,
+HR Team
+Needs human review: false
+
+Tokens: 3930 input, 646 output

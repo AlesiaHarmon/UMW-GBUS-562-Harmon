@@ -1,0 +1,20 @@
+DRAFT - NOT SENT
+To: Jenna Morales <jenna.morales@ridgelinehotels.example>
+Subject: Re: PTO question
+Needs human review: false
+Organization: ridgeline-hotels
+Source email: week-04/ridgeline-hotels/sample-emails/01-jenna-pto.eml
+Model: claude-sonnet-5
+
+Hi Jenna,
+
+Thanks for reaching out! Here's the info you asked for:
+
+- You currently have 8 PTO days remaining this year (and 5 sick days remaining, in case that's helpful too).
+
+- Regarding carryover: per the PTO Policy, you can carry up to 3 unused PTO days into the next calendar year. Any unused days beyond 3 are paid out at your regular rate in your first paycheck of January. (Source: pto-policy.html, "Carrying PTO into next year")
+
+Let me know if you have any other questions!
+
+Best,
+People & Culture Team
