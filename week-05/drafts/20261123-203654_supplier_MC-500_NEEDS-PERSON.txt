@@ -1,0 +1,19 @@
+To: supplier
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - Affects orders with a late penalty: O-1043
+------------------------------------------------------------
+Subject: RE: PO-7781 - MC-500 controllers - revised shipment schedule
+
+Hello Karen,
+
+Thank you for the update. To confirm our understanding: of the 400 MC-500 controllers on PO-7781, 120 will ship on the original scheduled date, with the remaining 280 now arriving three weeks later, on day 26.
+
+This change affects three of our orders, which will be delayed by 5 to 12 days.
+
+We're not able to share details on our customers. If there's any way to expedite a portion of the remaining 280 units sooner than day 26, that would help reduce the impact on our side — please let us know what's possible.
+
+We'll confirm our plans with you by the end of this week.
+
+Best regards,
+Purchasing, Brookfield Bicycle Company

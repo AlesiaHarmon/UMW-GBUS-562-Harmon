@@ -1,0 +1,22 @@
+To: supplier
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: no
+------------------------------------------------------------
+Subject: RE: PO-7795 - TR-29 tires - two options, please choose
+
+Hi Lisa,
+
+Thank you for the heads-up and for offering both options. To confirm our understanding:
+
+- Option 1: 160 tires on day 8, remaining 240 on day 22
+- Option 2 (default): all 400 tires together on day 12
+
+Under Option 2, one of our orders would be left 40 units short with a 3-day delay versus the original schedule. Option 1 would keep that order on track.
+
+We need a bit more time to finalize our decision internally. We will confirm our choice by your two-business-day deadline.
+
+In the meantime, is there any way to expedite a partial shipment sooner than day 8 or day 12, or to increase the first-shipment quantity under Option 1? Either would help reduce the impact on our end.
+
+Thanks for your patience,
+
+Purchasing, Brookfield Bicycle Company

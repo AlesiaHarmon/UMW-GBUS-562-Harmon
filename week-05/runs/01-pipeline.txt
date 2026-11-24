@@ -1,0 +1,439 @@
+Supplier email: week-05\brookfield-bikes\supplier-emails\01-northgate-controller-delay.eml
+
+######################################################################
+# STEP 1: supply analyst
+######################################################################
+
+=== HANDOFF  coordinator -> analyst: supplier email
+From: Karen Walsh <k.walsh@northgatedrive.example>
+To: Purchasing <purchasing@brookfieldbikes.example>
+Subject: PO-7781 - MC-500 controllers - revised shipment schedule
+
+Hello,
+
+I'm writing about PO-7781 for 400 MC-500 motor controllers. Our chip supplier
+has had a production problem, and we can't ship the full order on the scheduled
+date.
+
+We can ship 120 of the 400 controllers on the scheduled date. The remaining 280
+will follow three weeks later.
+
+I'm sorry for the trouble this causes. Please let us know which of your
+customers are most affected, so we can understand the impact on your side. If
+you would like to discuss other options, I'm available this week.
+
+Karen Walsh
+Account Manager, Northgate Drive Systems
+    [tokens] analyst: 2584 input, 138 output this call (total 2584 input, 138 output in 1 calls)
+
+=== HANDOFF  analyst -> MCP tool get_part: tool call 1 of 10
+{
+  "part_id": "MC-500"
+}
+    [result] 343 characters
+
+=== HANDOFF  analyst -> MCP tool get_orders_for_part: tool call 2 of 10
+{
+  "part_id": "MC-500"
+}
+    [result] 1687 characters
+    [tokens] analyst: 3722 input, 173 output this call (total 6306 input, 311 output in 2 calls)
+
+=== HANDOFF  analyst -> MCP tool check_coverage: tool call 3 of 10
+{
+  "part_id": "MC-500",
+  "arrivals": [
+    {
+      "qty": 120,
+      "arrives_in_days": 5
+    },
+    {
+      "qty": 280,
+      "arrives_in_days": 26
+    }
+  ]
+}
+    [result] 2351 characters
+    [tokens] analyst: 4946 input, 705 output this call (total 11252 input, 1016 output in 3 calls)
+
+=== HANDOFF  analyst -> coordinator: brief (JSON)
+{
+  "part_id": "MC-500",
+  "what_changed": "Of the 400 MC-500 controllers on PO-7781, only 120 will arrive on day 5 as scheduled, with the remaining 280 now arriving on day 26 (three weeks later).",
+  "orders_at_risk": [
+    {
+      "order_id": "O-1043",
+      "customer": "City of Ashford Bike Share",
+      "units_short": 10,
+      "ship_day": 14,
+      "ready_day": 26,
+      "late_penalty": true
+    },
+    {
+      "order_id": "O-1044",
+      "customer": "Main Street Bikes",
+      "units_short": 30,
+      "ship_day": 18,
+      "ready_day": 26,
+      "late_penalty": false
+    },
+    {
+      "order_id": "O-1045",
+      "customer": "Lakeview Rentals",
+      "units_short": 50,
+      "ship_day": 21,
+      "ready_day": 26,
+      "late_penalty": false
+    }
+  ],
+  "options": [],
+  "decisions_for_a_person": [
+    "Decide whether to accept the delayed 280-unit shipment on day 26 or pursue alternative sourcing/expediting to avoid the 12-day delay on O-1043 (which carries a late penalty) and the shorter delays on O-1044 and O-1045.",
+    "Determine if Northgate Drive Systems can offer a partial expedite or split shipment to prioritize the penalty-bearing order O-1043.",
+    "Decide how to communicate the delay impact to affected customers (Ashford Bike Share, Main Street Bikes, Lakeview Rentals)."
+  ],
+  "supplier_questions": [
+    "Which of Brookfield's customers are most affected by the delay?"
+  ]
+}
+
+######################################################################
+# STEP 2: customer notices for 3 order(s) at risk
+######################################################################
+
+=== HANDOFF  coordinator -> customer writer: facts for order O-1043
+Order facts:
+{
+  "order_id": "O-1043",
+  "customer": "City of Ashford Bike Share",
+  "model": "Commuter E",
+  "bikes": 100,
+  "days_late": 12,
+  "cause": "a delay in a part from one of our suppliers"
+}
+    [tokens] customer writer: 343 input, 172 output this call (total 343 input, 172 output in 1 calls)
+
+=== HANDOFF  customer writer -> coordinator: customer draft for O-1043
+Subject: Update on Your Order O-1043
+
+Dear City of Ashford Bike Share,
+
+We're writing to update you on order O-1043 for 100 Commuter E bikes. The order is now expected to ship 12 days later than originally planned.
+
+We apologize for this delay. It is due to a delay in a part from one of our suppliers.
+
+We understand the timing is important for your operations and appreciate your patience. If you have questions, please reach out and we'll be glad to assist.
+
+Customer Service, Brookfield Bicycle Company
+
+=== HANDOFF  coordinator -> reviewer: customer draft and its facts
+Recipient: customer
+
+Facts the draft was written from:
+{
+  "order_id": "O-1043",
+  "customer": "City of Ashford Bike Share",
+  "model": "Commuter E",
+  "bikes": 100,
+  "days_late": 12,
+  "cause": "a delay in a part from one of our suppliers"
+}
+
+Draft:
+Subject: Update on Your Order O-1043
+
+Dear City of Ashford Bike Share,
+
+We're writing to update you on order O-1043 for 100 Commuter E bikes. The order is now expected to ship 12 days later than originally planned.
+
+We apologize for this delay. It is due to a delay in a part from one of our suppliers.
+
+We understand the timing is important for your operations and appreciate your patience. If you have questions, please reach out and we'll be glad to assist.
+
+Customer Service, Brookfield Bicycle Company
+    [tokens] reviewer: 602 input, 298 output this call (total 602 input, 298 output in 1 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+(no reasons given)
+
+=== SAVED  week-05/drafts/20261123-203635_customer_O-1043_NEEDS-PERSON.txt  (marked for a person)
+    - Order has a late penalty.
+
+=== HANDOFF  coordinator -> customer writer: facts for order O-1044
+Order facts:
+{
+  "order_id": "O-1044",
+  "customer": "Main Street Bikes",
+  "model": "Cargo E",
+  "bikes": 30,
+  "days_late": 8,
+  "cause": "a delay in a part from one of our suppliers"
+}
+    [tokens] customer writer: 340 input, 200 output this call (total 683 input, 372 output in 2 calls)
+
+=== HANDOFF  customer writer -> coordinator: customer draft for O-1044
+Subject: Update on Your Order O-1044
+
+Dear Main Street Bikes,
+
+We're writing to let you know that your order O-1044 for 30 Cargo E bikes will now ship 8 days later than originally planned.
+
+We're sorry for this delay. It was caused by a delay in a part from one of our suppliers.
+
+We understand this is an inconvenience, and we appreciate your patience while we work to get your order completed. We will keep you informed if there are any further updates regarding your shipment timeline.
+
+Thank you for your understanding and for your continued business with us.
+
+Customer Service, Brookfield Bicycle Company
+
+=== HANDOFF  coordinator -> reviewer: customer draft and its facts
+Recipient: customer
+
+Facts the draft was written from:
+{
+  "order_id": "O-1044",
+  "customer": "Main Street Bikes",
+  "model": "Cargo E",
+  "bikes": 30,
+  "days_late": 8,
+  "cause": "a delay in a part from one of our suppliers"
+}
+
+Draft:
+Subject: Update on Your Order O-1044
+
+Dear Main Street Bikes,
+
+We're writing to let you know that your order O-1044 for 30 Cargo E bikes will now ship 8 days later than originally planned.
+
+We're sorry for this delay. It was caused by a delay in a part from one of our suppliers.
+
+We understand this is an inconvenience, and we appreciate your patience while we work to get your order completed. We will keep you informed if there are any further updates regarding your shipment timeline.
+
+Thank you for your understanding and for your continued business with us.
+
+Customer Service, Brookfield Bicycle Company
+    [tokens] reviewer: 627 input, 296 output this call (total 1229 input, 594 output in 2 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+(no reasons given)
+
+=== SAVED  week-05/drafts/20261123-203642_customer_O-1044.txt
+
+=== HANDOFF  coordinator -> customer writer: facts for order O-1045
+Order facts:
+{
+  "order_id": "O-1045",
+  "customer": "Lakeview Rentals",
+  "model": "Commuter E",
+  "bikes": 50,
+  "days_late": 5,
+  "cause": "a delay in a part from one of our suppliers"
+}
+    [tokens] customer writer: 341 input, 171 output this call (total 1024 input, 543 output in 3 calls)
+
+=== HANDOFF  customer writer -> coordinator: customer draft for O-1045
+Subject: Update on Your Order O-1045
+
+Dear Lakeview Rentals,
+
+We're writing to update you on order O-1045 for 50 Commuter E bikes. We're sorry to let you know this order is now expected to ship 5 days later than originally planned.
+
+The delay is due to a delay in a part from one of our suppliers.
+
+We understand the inconvenience this may cause and appreciate your patience. If you have any questions, please don't hesitate to reach out.
+
+Customer Service, Brookfield Bicycle Company
+
+=== HANDOFF  coordinator -> reviewer: customer draft and its facts
+Recipient: customer
+
+Facts the draft was written from:
+{
+  "order_id": "O-1045",
+  "customer": "Lakeview Rentals",
+  "model": "Commuter E",
+  "bikes": 50,
+  "days_late": 5,
+  "cause": "a delay in a part from one of our suppliers"
+}
+
+Draft:
+Subject: Update on Your Order O-1045
+
+Dear Lakeview Rentals,
+
+We're writing to update you on order O-1045 for 50 Commuter E bikes. We're sorry to let you know this order is now expected to ship 5 days later than originally planned.
+
+The delay is due to a delay in a part from one of our suppliers.
+
+We understand the inconvenience this may cause and appreciate your patience. If you have any questions, please don't hesitate to reach out.
+
+Customer Service, Brookfield Bicycle Company
+    [tokens] reviewer: 599 input, 237 output this call (total 1828 input, 831 output in 3 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+(no reasons given)
+
+=== SAVED  week-05/drafts/20261123-203647_customer_O-1045.txt
+
+######################################################################
+# STEP 3: reply to the supplier
+######################################################################
+
+=== HANDOFF  coordinator -> supplier writer: email and brief, without customer names, penalties or internal decisions
+Supplier email:
+From: Karen Walsh <k.walsh@northgatedrive.example>
+To: Purchasing <purchasing@brookfieldbikes.example>
+Subject: PO-7781 - MC-500 controllers - revised shipment schedule
+
+Hello,
+
+I'm writing about PO-7781 for 400 MC-500 motor controllers. Our chip supplier
+has had a production problem, and we can't ship the full order on the scheduled
+date.
+
+We can ship 120 of the 400 controllers on the scheduled date. The remaining 280
+will follow three weeks later.
+
+I'm sorry for the trouble this causes. Please let us know which of your
+customers are most affected, so we can understand the impact on your side. If
+you would like to discuss other options, I'm available this week.
+
+Karen Walsh
+Account Manager, Northgate Drive Systems
+
+
+Supply analyst's brief:
+{
+  "part_id": "MC-500",
+  "what_changed": "Of the 400 MC-500 controllers on PO-7781, only 120 will arrive on day 5 as scheduled, with the remaining 280 now arriving on day 26 (three weeks later).",
+  "orders_at_risk": [
+    {
+      "order_id": "O-1043",
+      "units_short": 10,
+      "ship_day": 14,
+      "ready_day": 26
+    },
+    {
+      "order_id": "O-1044",
+      "units_short": 30,
+      "ship_day": 18,
+      "ready_day": 26
+    },
+    {
+      "order_id": "O-1045",
+      "units_short": 50,
+      "ship_day": 21,
+      "ready_day": 26
+    }
+  ],
+  "options": [],
+  "supplier_questions": [
+    "Which of Brookfield's customers are most affected by the delay?"
+  ]
+}
+    [tokens] supplier writer: 936 input, 403 output this call (total 936 input, 403 output in 1 calls)
+
+=== HANDOFF  supplier writer -> coordinator: supplier draft
+Subject: RE: PO-7781 - MC-500 controllers - revised shipment schedule
+
+Hello Karen,
+
+Thank you for the update. To confirm our understanding: of the 400 MC-500 controllers on PO-7781, 120 will ship on the original scheduled date, with the remaining 280 now arriving three weeks later, on day 26.
+
+This change affects three of our orders, which will be delayed by 5 to 12 days.
+
+We're not able to share details on our customers. If there's any way to expedite a portion of the remaining 280 units sooner than day 26, that would help reduce the impact on our side — please let us know what's possible.
+
+We'll confirm our plans with you by the end of this week.
+
+Best regards,
+Purchasing, Brookfield Bicycle Company
+
+=== HANDOFF  coordinator -> reviewer: supplier draft and its facts
+Recipient: supplier
+
+Facts the draft was written from:
+{
+  "supplier_email": "From: Karen Walsh <k.walsh@northgatedrive.example>\nTo: Purchasing <purchasing@brookfieldbikes.example>\nSubject: PO-7781 - MC-500 controllers - revised shipment schedule\n\nHello,\n\nI'm writing about PO-7781 for 400 MC-500 motor controllers. Our chip supplier\nhas had a production problem, and we can't ship the full order on the scheduled\ndate.\n\nWe can ship 120 of the 400 controllers on the scheduled date. The remaining 280\nwill follow three weeks later.\n\nI'm sorry for the trouble this causes. Please let us know which of your\ncustomers are most affected, so we can understand the impact on your side. If\nyou would like to discuss other options, I'm available this week.\n\nKaren Walsh\nAccount Manager, Northgate Drive Systems\n",
+  "brief": {
+    "part_id": "MC-500",
+    "what_changed": "Of the 400 MC-500 controllers on PO-7781, only 120 will arrive on day 5 as scheduled, with the remaining 280 now arriving on day 26 (three weeks later).",
+    "orders_at_risk": [
+      {
+        "order_id": "O-1043",
+        "units_short": 10,
+        "ship_day": 14,
+        "ready_day": 26
+      },
+      {
+        "order_id": "O-1044",
+        "units_short": 30,
+        "ship_day": 18,
+        "ready_day": 26
+      },
+      {
+        "order_id": "O-1045",
+        "units_short": 50,
+        "ship_day": 21,
+        "ready_day": 26
+      }
+    ],
+    "options": [],
+    "supplier_questions": [
+      "Which of Brookfield's customers are most affected by the delay?"
+    ]
+  }
+}
+
+Draft:
+Subject: RE: PO-7781 - MC-500 controllers - revised shipment schedule
+
+Hello Karen,
+
+Thank you for the update. To confirm our understanding: of the 400 MC-500 controllers on PO-7781, 120 will ship on the original scheduled date, with the remaining 280 now arriving three weeks later, on day 26.
+
+This change affects three of our orders, which will be delayed by 5 to 12 days.
+
+We're not able to share details on our customers. If there's any way to expedite a portion of the remaining 280 units sooner than day 26, that would help reduce the impact on our side — please let us know what's possible.
+
+We'll confirm our plans with you by the end of this week.
+
+Best regards,
+Purchasing, Brookfield Bicycle Company
+    [tokens] reviewer: 1223 input, 290 output this call (total 3051 input, 1121 output in 4 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+(no reasons given)
+
+=== SAVED  week-05/drafts/20261123-203654_supplier_MC-500_NEEDS-PERSON.txt  (marked for a person)
+    - Affects orders with a late penalty: O-1043
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 4
+  - 20261123-203635_customer_O-1043_NEEDS-PERSON.txt  (customer, order O-1043; reviewer APPROVE, 0 revision(s))
+  - 20261123-203642_customer_O-1044.txt  (customer, order O-1044; reviewer APPROVE, 0 revision(s))
+  - 20261123-203647_customer_O-1045.txt  (customer, order O-1045; reviewer APPROVE, 0 revision(s))
+  - 20261123-203654_supplier_MC-500_NEEDS-PERSON.txt  (supplier; reviewer APPROVE, 0 revision(s))
+
+Drafts marked for a person: 2
+  - 20261123-203635_customer_O-1043_NEEDS-PERSON.txt
+      Order has a late penalty.
+  - 20261123-203654_supplier_MC-500_NEEDS-PERSON.txt
+      Affects orders with a late penalty: O-1043
+
+Decisions for a person: 3
+  - Decide whether to accept the delayed 280-unit shipment on day 26 or pursue alternative sourcing/expediting to avoid the 12-day delay on O-1043 (which carries a late penalty) and the shorter delays on O-1044 and O-1045.
+  - Determine if Northgate Drive Systems can offer a partial expedite or split shipment to prioritize the penalty-bearing order O-1043.
+  - Decide how to communicate the delay impact to affected customers (Ashford Bike Share, Main Street Bikes, Lakeview Rentals).
+
+=== TOKENS USED BY EACH SPECIALIST
+  analyst           3 calls    11252 input    1016 output
+  customer writer   3 calls     1024 input     543 output
+  reviewer          4 calls     3051 input    1121 output
+  supplier writer   1 calls      936 input     403 output
+  all                          16263 input    3083 output

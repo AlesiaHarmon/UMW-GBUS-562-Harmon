@@ -1,0 +1,354 @@
+Supplier email: week-05\brookfield-bikes\supplier-emails\02-kendall-tire-options.eml
+    [tokens] orchestrator: 1464 input, 89 output this call (total 1464 input, 89 output in 1 calls)
+
+######################################################################
+# CHOICE 1 of 10: run_supply_analyst
+######################################################################
+
+=== HANDOFF  coordinator -> analyst: supplier email
+From: Lisa Moreno <l.moreno@kendalltire.example>
+To: Purchasing <purchasing@brookfieldbikes.example>
+Subject: PO-7795 - TR-29 tires - two options, please choose
+
+Hi,
+
+About PO-7795 for 400 TR-29 trail tires: a mixing machine at our plant is down
+for repairs, so we can't fill the whole order at once. We can offer two options:
+
+Option 1: Ship 160 tires on the scheduled date, and the remaining 240 two weeks
+later.
+
+Option 2: Hold the order and ship all 400 tires together, four days after the
+scheduled date.
+
+Please tell us which option you prefer within two business days. If we don't
+hear from you, we'll go with Option 2.
+
+Thanks,
+Lisa Moreno
+Customer Service, Kendall Tire Supply
+    [tokens] analyst: 2591 input, 143 output this call (total 2591 input, 143 output in 1 calls)
+
+=== HANDOFF  analyst -> MCP tool get_part: tool call 1 of 10
+{
+  "part_id": "TR-29"
+}
+    [result] 320 characters
+
+=== HANDOFF  analyst -> MCP tool get_orders_for_part: tool call 2 of 10
+{
+  "part_id": "TR-29"
+}
+    [result] 761 characters
+    [tokens] analyst: 3311 input, 273 output this call (total 5902 input, 416 output in 2 calls)
+
+=== HANDOFF  analyst -> MCP tool check_coverage: tool call 3 of 10
+{
+  "part_id": "TR-29",
+  "arrivals": [
+    {
+      "qty": 160,
+      "arrives_in_days": 8
+    },
+    {
+      "qty": 240,
+      "arrives_in_days": 22
+    }
+  ]
+}
+    [result] 1177 characters
+
+=== HANDOFF  analyst -> MCP tool check_coverage: tool call 4 of 10
+{
+  "part_id": "TR-29",
+  "arrivals": [
+    {
+      "qty": 400,
+      "arrives_in_days": 12
+    }
+  ]
+}
+    [result] 1203 characters
+    [tokens] analyst: 4720 input, 739 output this call (total 10622 input, 1155 output in 3 calls)
+
+=== HANDOFF  analyst -> coordinator: brief (JSON)
+{
+  "part_id": "TR-29",
+  "what_changed": "The scheduled PO-7795 delivery of 400 TR-29 tires (originally due day 8) will instead arrive either as 160 units on day 8 plus 240 units on day 22 (Option 1), or as a single 400-unit shipment on day 12 (Option 2, the default if no reply).",
+  "orders_at_risk": [
+    {
+      "order_id": "O-1046",
+      "customer": "Hilltop Outfitters",
+      "units_short": 40,
+      "ship_day": 9,
+      "ready_day": 12,
+      "late_penalty": false
+    }
+  ],
+  "options": [
+    {
+      "name": "Option 1: 160 units on day 8, 240 units on day 22",
+      "order_ids": []
+    },
+    {
+      "name": "Option 2: 400 units together on day 12 (default if no response)",
+      "order_ids": [
+        "O-1046"
+      ]
+    }
+  ],
+  "decisions_for_a_person": [
+    "Choose between Option 1 (split shipment, keeps all orders on schedule) and Option 2 (single delayed shipment, which leaves order O-1046 40 units short and 3 days late unless action is taken) and reply to Kendall Tire Supply within two business days."
+  ],
+  "supplier_questions": [
+    "Which shipping option do you prefer, Option 1 (split shipment) or Option 2 (single delayed shipment)?"
+  ]
+}
+    [tokens] orchestrator: 1985 input, 407 output this call (total 3449 input, 496 output in 2 calls)
+
+######################################################################
+# CHOICE 2 of 10: draft_supplier_reply
+######################################################################
+
+=== HANDOFF  coordinator -> supplier writer: email and brief, customer names removed
+Supplier email:
+From: Lisa Moreno <l.moreno@kendalltire.example>
+To: Purchasing <purchasing@brookfieldbikes.example>
+Subject: PO-7795 - TR-29 tires - two options, please choose
+
+Hi,
+
+About PO-7795 for 400 TR-29 trail tires: a mixing machine at our plant is down
+for repairs, so we can't fill the whole order at once. We can offer two options:
+
+Option 1: Ship 160 tires on the scheduled date, and the remaining 240 two weeks
+later.
+
+Option 2: Hold the order and ship all 400 tires together, four days after the
+scheduled date.
+
+Please tell us which option you prefer within two business days. If we don't
+hear from you, we'll go with Option 2.
+
+Thanks,
+Lisa Moreno
+Customer Service, Kendall Tire Supply
+
+
+Supply analyst's brief:
+{
+  "part_id": "TR-29",
+  "what_changed": "The scheduled PO-7795 delivery of 400 TR-29 tires (originally due day 8) will instead arrive either as 160 units on day 8 plus 240 units on day 22 (Option 1), or as a single 400-unit shipment on day 12 (Option 2, the default if no reply).",
+  "orders_at_risk": [
+    {
+      "order_id": "O-1046",
+      "units_short": 40,
+      "ship_day": 9,
+      "ready_day": 12,
+      "late_penalty": false
+    }
+  ],
+  "options": [
+    {
+      "name": "Option 1: 160 units on day 8, 240 units on day 22",
+      "order_ids": []
+    },
+    {
+      "name": "Option 2: 400 units together on day 12 (default if no response)",
+      "order_ids": [
+        "O-1046"
+      ]
+    }
+  ],
+  "decisions_for_a_person": [
+    "Choose between Option 1 (split shipment, keeps all orders on schedule) and Option 2 (single delayed shipment, which leaves order O-1046 40 units short and 3 days late unless action is taken) and reply to Kendall Tire Supply within two business days."
+  ],
+  "supplier_questions": [
+    "Which shipping option do you prefer, Option 1 (split shipment) or Option 2 (single delayed shipment)?"
+  ]
+}
+    [tokens] supplier writer: 1068 input, 297 output this call (total 1068 input, 297 output in 1 calls)
+
+=== HANDOFF  supplier writer -> coordinator: supplier draft
+Subject: RE: PO-7795 - TR-29 tires - two options, please choose
+
+Hi Lisa,
+
+Thank you for the heads-up and for offering both options. To confirm our understanding:
+
+- Option 1: 160 tires on day 8, remaining 240 on day 22
+- Option 2 (default): all 400 tires together on day 12
+
+Under Option 2, one of our orders would be left 40 units short with a 3-day delay versus the original schedule. Option 1 would keep that order on track.
+
+We need a bit more time to finalize our decision internally. We will confirm our choice by your two-business-day deadline.
+
+In the meantime, is there any way to expedite a partial shipment sooner than day 8 or day 12, or to increase the first-shipment quantity under Option 1? Either would help reduce the impact on our end.
+
+Thanks for your patience,
+
+Purchasing, Brookfield Bicycle Company
+
+=== HANDOFF  coordinator -> reviewer: supplier draft and its facts
+Recipient: supplier
+
+Facts the draft was written from:
+{
+  "supplier_email": "From: Lisa Moreno <l.moreno@kendalltire.example>\nTo: Purchasing <purchasing@brookfieldbikes.example>\nSubject: PO-7795 - TR-29 tires - two options, please choose\n\nHi,\n\nAbout PO-7795 for 400 TR-29 trail tires: a mixing machine at our plant is down\nfor repairs, so we can't fill the whole order at once. We can offer two options:\n\nOption 1: Ship 160 tires on the scheduled date, and the remaining 240 two weeks\nlater.\n\nOption 2: Hold the order and ship all 400 tires together, four days after the\nscheduled date.\n\nPlease tell us which option you prefer within two business days. If we don't\nhear from you, we'll go with Option 2.\n\nThanks,\nLisa Moreno\nCustomer Service, Kendall Tire Supply\n",
+  "brief": {
+    "part_id": "TR-29",
+    "what_changed": "The scheduled PO-7795 delivery of 400 TR-29 tires (originally due day 8) will instead arrive either as 160 units on day 8 plus 240 units on day 22 (Option 1), or as a single 400-unit shipment on day 12 (Option 2, the default if no reply).",
+    "orders_at_risk": [
+      {
+        "order_id": "O-1046",
+        "units_short": 40,
+        "ship_day": 9,
+        "ready_day": 12,
+        "late_penalty": false
+      }
+    ],
+    "options": [
+      {
+        "name": "Option 1: 160 units on day 8, 240 units on day 22",
+        "order_ids": []
+      },
+      {
+        "name": "Option 2: 400 units together on day 12 (default if no response)",
+        "order_ids": [
+          "O-1046"
+        ]
+      }
+    ],
+    "decisions_for_a_person": [
+      "Choose between Option 1 (split shipment, keeps all orders on schedule) and Option 2 (single delayed shipment, which leaves order O-1046 40 units short and 3 days late unless action is taken) and reply to Kendall Tire Supply within two business days."
+    ],
+    "supplier_questions": [
+      "Which shipping option do you prefer, Option 1 (split shipment) or Option 2 (single delayed shipment)?"
+    ]
+  }
+}
+
+Draft:
+Subject: RE: PO-7795 - TR-29 tires - two options, please choose
+
+Hi Lisa,
+
+Thank you for the heads-up and for offering both options. To confirm our understanding:
+
+- Option 1: 160 tires on day 8, remaining 240 on day 22
+- Option 2 (default): all 400 tires together on day 12
+
+Under Option 2, one of our orders would be left 40 units short with a 3-day delay versus the original schedule. Option 1 would keep that order on track.
+
+We need a bit more time to finalize our decision internally. We will confirm our choice by your two-business-day deadline.
+
+In the meantime, is there any way to expedite a partial shipment sooner than day 8 or day 12, or to increase the first-shipment quantity under Option 1? Either would help reduce the impact on our end.
+
+Thanks for your patience,
+
+Purchasing, Brookfield Bicycle Company
+    [tokens] reviewer: 1447 input, 695 output this call (total 1447 input, 695 output in 1 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+REVISE
+
+3. The draft describes the impact on a specific customer order ("one of our orders would be left 40 units short with a 3-day delay... Option 1 would keep that order on track"). This discloses customer-order details to the supplier. Remove that sentence entirely; simply state that Brookfield needs more time to decide internally, without referencing any specific order's shortage or delay.
+
+=== SAVED  week-05/drafts/20261123-172453_supplier_TR-29.txt
+
+######################################################################
+# CHOICE 3 of 10: draft_customer_notice {"order_id": "O-1046"}
+######################################################################
+
+=== HANDOFF  coordinator -> customer writer: facts for order O-1046
+Order facts:
+{
+  "order_id": "O-1046",
+  "customer": "Hilltop Outfitters",
+  "model": "Trail 29",
+  "bikes": 80,
+  "planned_ship_day": 9,
+  "expected_ship_day": 12,
+  "days_late": 3,
+  "cause": "a delay in a part from one of our suppliers",
+  "note": "Days are counted from today (day 0)."
+}
+    [tokens] customer writer: 373 input, 155 output this call (total 373 input, 155 output in 1 calls)
+
+=== HANDOFF  customer writer -> coordinator: customer draft for O-1046
+Subject: Update on Your Order O-1046
+
+Dear Hilltop Outfitters,
+
+We're writing to update you on order O-1046 for 80 Trail 29 bikes. This order is now expected to ship 3 days later than planned.
+
+We apologize for the delay. It was caused by a delay in a part from one of our suppliers.
+
+We appreciate your patience and will keep you informed of any further updates regarding your order.
+
+Customer Service, Brookfield Bicycle Company
+
+=== HANDOFF  coordinator -> reviewer: customer draft and its facts
+Recipient: customer
+
+Facts the draft was written from:
+{
+  "order_id": "O-1046",
+  "customer": "Hilltop Outfitters",
+  "model": "Trail 29",
+  "bikes": 80,
+  "planned_ship_day": 9,
+  "expected_ship_day": 12,
+  "days_late": 3,
+  "cause": "a delay in a part from one of our suppliers",
+  "note": "Days are counted from today (day 0)."
+}
+
+Draft:
+Subject: Update on Your Order O-1046
+
+Dear Hilltop Outfitters,
+
+We're writing to update you on order O-1046 for 80 Trail 29 bikes. This order is now expected to ship 3 days later than planned.
+
+We apologize for the delay. It was caused by a delay in a part from one of our suppliers.
+
+We appreciate your patience and will keep you informed of any further updates regarding your order.
+
+Customer Service, Brookfield Bicycle Company
+    [tokens] reviewer: 631 input, 195 output this call (total 2078 input, 890 output in 2 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+(no reasons given)
+
+=== SAVED  week-05/drafts/20261123-172457_customer_O-1046.txt
+    [tokens] orchestrator: 3034 input, 299 output this call (total 6483 input, 795 output in 3 calls)
+
+######################################################################
+# CHOICE 4 of 10: finish {"summary": "Kendall Tire Supply needs a choice on PO-7795 (400 TR-29 tires) within 2 business days: Option 1 splits shipment (160 on day 8, 240 on day 22) and keeps all customer orders on schedule; Option 2 (their default if we don't respond) delivers all 400 together on day 12 but leaves order O-1046 (Hilltop Outfitters) 40 units short and 3 days late. A draft supplier reply (asking for a bit more time and exploring faster options) and a draft customer notice to Hilltop Outfitters about the potential delay have been prepared and saved for review. A person must decide which option to choose and confirm with the supplier before the deadline.", "decision_needed": true}
+######################################################################
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 2
+  - 20261123-172453_supplier_TR-29.txt  (supplier; reviewer APPROVE, 0 revision(s))
+  - 20261123-172457_customer_O-1046.txt  (customer, order O-1046; reviewer APPROVE, 0 revision(s))
+
+Drafts marked for a person: 0
+
+Decisions for a person: 1
+  - Choose between Option 1 (split shipment, keeps all orders on schedule) and Option 2 (single delayed shipment, which leaves order O-1046 40 units short and 3 days late unless action is taken) and reply to Kendall Tire Supply within two business days.
+
+=== TOKENS USED BY EACH SPECIALIST
+  orchestrator      3 calls     6483 input     795 output
+  analyst           3 calls    10622 input    1155 output
+  supplier writer   1 calls     1068 input     297 output
+  reviewer          2 calls     2078 input     890 output
+  customer writer   1 calls      373 input     155 output
+  all                          20624 input    3292 output
+
+Orchestrator's summary for a person:
+  Kendall Tire Supply needs a choice on PO-7795 (400 TR-29 tires) within 2 business days: Option 1 splits shipment (160 on day 8, 240 on day 22) and keeps all customer orders on schedule; Option 2 (their default if we don't respond) delivers all 400 together on day 12 but leaves order O-1046 (Hilltop Outfitters) 40 units short and 3 days late. A draft supplier reply (asking for a bit more time and exploring faster options) and a draft customer notice to Hilltop Outfitters about the potential delay have been prepared and saved for review. A person must decide which option to choose and confirm with the supplier before the deadline.
+  A person must make a decision: YES

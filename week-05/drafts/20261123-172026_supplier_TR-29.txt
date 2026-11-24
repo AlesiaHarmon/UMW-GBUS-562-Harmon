@@ -1,0 +1,21 @@
+To: supplier
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: no
+------------------------------------------------------------
+Subject: RE: PO-7795 - TR-29 tires - two options, please choose
+
+Hi Lisa,
+
+Thank you for the update on PO-7795. We understand the situation as follows:
+
+- Option 1: 160 tires on day 8, remaining 240 on day 22.
+- Option 2: All 400 tires together on day 12 (4 days after the original day‑8 date).
+
+For our planning, Option 2 would leave one of our orders short by 40 units on its scheduled ship day and delay it by 3 days. Option 1 does not create any shortfall on our end.
+
+Before we finalize, is there any way to pull forward part of the day‑22 quantity in Option 1, or get any additional units to us sooner under either option? That would help reduce the impact further.
+
+We will confirm our choice within the two-business-day window you requested.
+
+Thank you,
+Purchasing, Brookfield Bicycle Company

@@ -1,0 +1,26 @@
+Supplier email: week-05\brookfield-bikes\supplier-emails\03-keystone-on-schedule.eml
+    [tokens] orchestrator: 1353 input, 189 output this call (total 1353 input, 189 output in 1 calls)
+
+[orchestrator says] This email confirms on-schedule shipment with no changes to quantity or timing — no customer orders are at risk and no supplier reply is needed.
+
+######################################################################
+# CHOICE 1 of 10: finish {"summary": "Keystone Battery Co. confirmed PO-7790 (150 BP-48 battery packs) shipped on schedule with no changes to quantity or delivery date. No impact to customer orders, no reply or notices needed.", "decision_needed": false}
+######################################################################
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 0
+
+Drafts marked for a person: 0
+
+Decisions for a person: 0
+
+=== TOKENS USED BY EACH SPECIALIST
+  orchestrator      1 calls     1353 input     189 output
+  all                           1353 input     189 output
+
+Orchestrator's summary for a person:
+  Keystone Battery Co. confirmed PO-7790 (150 BP-48 battery packs) shipped on schedule with no changes to quantity or delivery date. No impact to customer orders, no reply or notices needed.
+  A person must make a decision: no

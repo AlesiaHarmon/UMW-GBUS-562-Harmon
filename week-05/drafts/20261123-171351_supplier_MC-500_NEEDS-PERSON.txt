@@ -1,0 +1,19 @@
+To: supplier
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - Affects orders with a late penalty: O-1043
+------------------------------------------------------------
+Subject: RE: PO-7781 - MC-500 controllers - revised shipment schedule
+
+Hello Karen,
+
+Thank you for the update. To confirm our understanding: PO-7781 will now arrive as 120 units on day 5 as originally scheduled, with the remaining 280 units arriving on day 26, rather than the full 400 on day 5.
+
+This shortfall affects three of our orders, with units short ranging from 10 to 50 and delays of up to 12 days against the affected ship dates. One of these delays carries a late penalty on our side, so the timing is important to us.
+
+We're not able to share details on our customers. We would like to reduce this impact, so please let us know if there is any way to expedite a portion of the 280-unit balance sooner than day 26, even a partial early shipment would help.
+
+We'll confirm by this week whether we'd like to discuss further options with you.
+
+Best regards,
+Purchasing, Brookfield Bicycle Company
