@@ -1,0 +1,118 @@
+Organization: copperline-coffee
+Supplier email: week-05\copperline-coffee\supplier-emails\04-pelham-maintenance-closure.eml
+
+######################################################################
+# STEP 1: supply analyst
+######################################################################
+
+=== HANDOFF  coordinator -> analyst: supplier email (copperline-coffee)
+From: Owen Brady <o.brady@pelhamfittings.example>
+To: Purchasing <purchasing@copperlinecoffee.example>
+Subject: Plant maintenance closure - PO-5540 not affected
+
+Hello,
+
+A quick note for your planning: our plant will close for one week of annual
+maintenance, starting four weeks from today.
+
+Your open order, PO-5540 for 60 SW-3 steam wands, ships before the closure
+and will arrive on the scheduled date. No action is needed on your side.
+
+Kind regards,
+Owen Brady
+Customer Care, Pelham Fittings
+    [tokens] analyst: 2510 input, 257 output this call (total 2510 input, 257 output in 1 calls)
+
+=== HANDOFF  analyst -> MCP tool get_part: tool call 1 of 10
+{
+  "part_id": "SW-3"
+}
+    [result] 304 characters
+
+=== HANDOFF  analyst -> MCP tool get_orders_for_part: tool call 2 of 10
+{
+  "part_id": "SW-3"
+}
+    [result] 776 characters
+    [tokens] analyst: 3344 input, 403 output this call (total 5854 input, 660 output in 2 calls)
+
+=== HANDOFF  analyst -> coordinator: full brief (JSON)
+{
+  "part_id": "SW-3",
+  "what_changed": "PO-5540 (60 units) will arrive on day 11 as originally scheduled, unaffected by the supplier's one-week maintenance closure starting on day 28.",
+  "orders_at_risk": [],
+  "options": [],
+  "decisions_for_a_person": [],
+  "supplier_questions": []
+}
+
+=== HANDOFF  code -> coordinator: brief checked against 0 check_coverage result(s)
+{
+  "corrections": "none",
+  "problems": "none"
+}
+
+######################################################################
+# STEP 2: customer notices - skipped, no orders at risk
+######################################################################
+
+######################################################################
+# STEP 3: reply to the supplier
+######################################################################
+
+=== HANDOFF  coordinator -> supplier writer: email and sanitized brief (no customer names, order IDs, penalties or internal decisions; impact computed in code)
+Supplier email:
+From: Owen Brady <o.brady@pelhamfittings.example>
+To: Purchasing <purchasing@copperlinecoffee.example>
+Subject: Plant maintenance closure - PO-5540 not affected
+
+Hello,
+
+A quick note for your planning: our plant will close for one week of annual
+maintenance, starting four weeks from today.
+
+Your open order, PO-5540 for 60 SW-3 steam wands, ships before the closure
+and will arrive on the scheduled date. No action is needed on your side.
+
+Kind regards,
+Owen Brady
+Customer Care, Pelham Fittings
+
+
+Supply analyst's brief:
+{
+  "part_id": "SW-3",
+  "what_changed": "PO-5540 (60 units) will arrive on day 11 as originally scheduled, unaffected by the supplier's one-week maintenance closure starting on day 28.",
+  "impact": {
+    "orders_delayed": 0
+  },
+  "impact_note": "Worked out in code from the analyst's order data. State the impact only with these numbers (how many orders are delayed, and the fewest to the most days late); don't work out your own.",
+  "options": [],
+  "supplier_questions": []
+}
+    [tokens] supplier writer: 682 input, 13 output this call (total 682 input, 13 output in 1 calls)
+
+=== HANDOFF  supplier writer -> coordinator: supplier draft
+(3 words; the final draft is printed after the review)
+
+FINAL DRAFT TO SUPPLIER
+NO REPLY NEEDED
+Marked for a person: no
+
+=== SAVED  week-05/drafts/copperline-coffee/20261123-214538_supplier_SW-3.txt
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 1
+  - 20261123-214538_supplier_SW-3.txt  (supplier; reviewer APPROVE, 0 revision(s))
+
+Drafts marked for a person: 0
+
+Decisions for a person: 0
+
+=== TOKENS USED BY EACH SPECIALIST
+  analyst           2 calls     5854 input     660 output
+  supplier writer   1 calls      682 input      13 output
+  all                           6536 input     673 output

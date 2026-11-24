@@ -1,0 +1,210 @@
+Organization: copperline-coffee
+Supplier email: week-05\copperline-coffee\supplier-emails\02-marlow-boiler-options.eml
+    [tokens] orchestrator: 1453 input, 101 output this call (total 1453 input, 101 output in 1 calls)
+
+######################################################################
+# CHOICE 1 of 10: run_supply_analyst
+######################################################################
+
+=== HANDOFF  coordinator -> analyst: supplier email (copperline-coffee)
+From: Victor Lindqvist <v.lindqvist@marlowmetal.example>
+To: Purchasing <purchasing@copperlinecoffee.example>
+Subject: PO-5520 - BL-12 boilers - please choose a shipping option
+
+Hi,
+
+About PO-5520 for 200 BL-12 boilers: our welding cell is running at half
+capacity this month, so we can't ship the whole order on time. We can offer
+two options:
+
+Option A: Ship 80 boilers on the scheduled date, and the remaining 120 two
+weeks after that.
+
+Option B: Ship all 200 boilers together, six days after the scheduled date.
+
+Please let us know which option you'd like within three business days. If we
+don't hear from you by then, we'll go with Option B.
+
+Regards,
+Victor Lindqvist
+Sales Coordinator, Marlow Metalworks
+    [tokens] analyst: 2595 input, 152 output this call (total 2595 input, 152 output in 1 calls)
+
+=== HANDOFF  analyst -> MCP tool get_part: tool call 1 of 10
+{
+  "part_id": "BL-12"
+}
+    [result] 331 characters
+
+=== HANDOFF  analyst -> MCP tool get_orders_for_part: tool call 2 of 10
+{
+  "part_id": "BL-12"
+}
+    [result] 1732 characters
+    [tokens] analyst: 3758 input, 272 output this call (total 6353 input, 424 output in 2 calls)
+
+=== HANDOFF  analyst -> MCP tool check_coverage: tool call 3 of 10
+{
+  "part_id": "BL-12",
+  "arrivals": [
+    {
+      "qty": 80,
+      "arrives_in_days": 7
+    },
+    {
+      "qty": 120,
+      "arrives_in_days": 21
+    }
+  ]
+}
+    [result] 2229 characters
+
+=== HANDOFF  analyst -> MCP tool check_coverage: tool call 4 of 10
+{
+  "part_id": "BL-12",
+  "arrivals": [
+    {
+      "qty": 200,
+      "arrives_in_days": 13
+    }
+  ]
+}
+    [result] 2173 characters
+    [tokens] analyst: 6022 input, 643 output this call (total 12375 input, 1067 output in 3 calls)
+
+=== HANDOFF  analyst -> coordinator: full brief (JSON)
+{
+  "part_id": "BL-12",
+  "what_changed": "PO-5520 for 200 BL-12 boilers will not ship complete on day 7 as originally scheduled; the supplier offers either a split shipment (80 units on day 7, 120 units on day 21) or the full 200 units in one shipment on day 13.",
+  "orders_at_risk": [
+    {
+      "order_id": "O-2203",
+      "customer": "Elm State University Dining",
+      "units_short": 40,
+      "ship_day": 12,
+      "ready_day": 13,
+      "late_penalty": true
+    }
+  ],
+  "options": [
+    {
+      "name": "Option A: 80 on day 7, 120 on day 21",
+      "order_ids": [
+        "O-2205"
+      ]
+    },
+    {
+      "name": "Option B: 200 together on day 13 (default if no reply)",
+      "order_ids": [
+        "O-2203"
+      ]
+    }
+  ],
+  "decisions_for_a_person": [
+    "Choose between Option A (puts order O-2205, Tall Pines Coffee House, at risk - 5 units short, ready day 21, 4 days late, late penalty applies) and Option B (puts order O-2203, Elm State University Dining, at risk - 40 units short, ready day 13, 1 day late, late penalty applies).",
+    "Decide and reply to the supplier within three business days, otherwise Option B will be applied by default."
+  ],
+  "supplier_questions": [
+    "Which shipping option would you like, Option A or Option B?"
+  ]
+}
+
+=== HANDOFF  code -> coordinator: brief checked against 2 check_coverage result(s)
+{
+  "corrections": [
+    "O-2205: added to orders_at_risk from check_coverage"
+  ],
+  "problems": "none"
+}
+
+=== HANDOFF  code -> coordinator: reconciled brief (JSON)
+{
+  "part_id": "BL-12",
+  "what_changed": "PO-5520 for 200 BL-12 boilers will not ship complete on day 7 as originally scheduled; the supplier offers either a split shipment (80 units on day 7, 120 units on day 21) or the full 200 units in one shipment on day 13.",
+  "orders_at_risk": [
+    {
+      "order_id": "O-2203",
+      "customer": "Elm State University Dining",
+      "units_short": 40,
+      "ship_day": 12,
+      "ready_day": 13,
+      "late_penalty": true,
+      "by_option": {
+        "Option B: 200 together on day 13 (default if no reply)": {
+          "units_short": 40,
+          "ready_day": 13,
+          "days_late": 1
+        }
+      }
+    },
+    {
+      "order_id": "O-2205",
+      "customer": "Tall Pines Coffee House",
+      "units_short": 5,
+      "ship_day": 17,
+      "ready_day": 21,
+      "late_penalty": true,
+      "by_option": {
+        "Option A: 80 on day 7, 120 on day 21": {
+          "units_short": 5,
+          "ready_day": 21,
+          "days_late": 4
+        }
+      }
+    }
+  ],
+  "options": [
+    {
+      "name": "Option A: 80 on day 7, 120 on day 21",
+      "order_ids": [
+        "O-2205"
+      ]
+    },
+    {
+      "name": "Option B: 200 together on day 13 (default if no reply)",
+      "order_ids": [
+        "O-2203"
+      ]
+    }
+  ],
+  "decisions_for_a_person": [
+    "Choose between Option A (puts order O-2205, Tall Pines Coffee House, at risk - 5 units short, ready day 21, 4 days late, late penalty applies) and Option B (puts order O-2203, Elm State University Dining, at risk - 40 units short, ready day 13, 1 day late, late penalty applies).",
+    "Decide and reply to the supplier within three business days, otherwise Option B will be applied by default."
+  ],
+  "supplier_questions": [
+    "Which shipping option would you like, Option A or Option B?"
+  ],
+  "reconciliation": {
+    "check_coverage_results": 2,
+    "corrections": [
+      "O-2205: added to orders_at_risk from check_coverage"
+    ],
+    "problems": []
+  }
+}
+    [tokens] orchestrator: 2237 input, 1760 output this call (total 3690 input, 1861 output in 2 calls)
+
+######################################################################
+# CHOICE 2 of 10: finish {"summary": "Marlow Metalworks can't ship all 200 BL-12 boilers for PO-5520 on time due to reduced welding capacity. They offer two options: (A) split shipment - 80 units on schedule, 120 units two weeks late, which would make order O-2205 (Tall Pines Coffee House, 5 units short) 4 days late with a penalty; or (B) all 200 units together, 6 days late, which would make order O-2203 (Elm State University Dining, 40 units short) 1 day late with a penalty. Supplier needs a reply within 3 business days or will default to Option B. A purchasing decision is needed on which option to choose before we reply to the supplier and notify the affected customer - please decide so we can draft the supplier reply and the relevant customer notice.", "decision_needed": true}
+######################################################################
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 0
+
+Drafts marked for a person: 0
+
+Decisions for a person: 2
+  - Choose between Option A (puts order O-2205, Tall Pines Coffee House, at risk - 5 units short, ready day 21, 4 days late, late penalty applies) and Option B (puts order O-2203, Elm State University Dining, at risk - 40 units short, ready day 13, 1 day late, late penalty applies).
+  - Decide and reply to the supplier within three business days, otherwise Option B will be applied by default.
+
+=== TOKENS USED BY EACH SPECIALIST
+  orchestrator      2 calls     3690 input    1861 output
+  analyst           3 calls    12375 input    1067 output
+  all                          16065 input    2928 output
+
+Orchestrator's summary for a person:
+  Marlow Metalworks can't ship all 200 BL-12 boilers for PO-5520 on time due to reduced welding capacity. They offer two options: (A) split shipment - 80 units on schedule, 120 units two weeks late, which would make order O-2205 (Tall Pines Coffee House, 5 units short) 4 days late with a penalty; or (B) all 200 units together, 6 days late, which would make order O-2203 (Elm State University Dining, 40 units short) 1 day late with a penalty. Supplier needs a reply within 3 business days or will default to Option B. A purchasing decision is needed on which option to choose before we reply to the supplier and notify the affected customer - please decide so we can draft the supplier reply and the relevant customer notice.
+  A person must make a decision: YES

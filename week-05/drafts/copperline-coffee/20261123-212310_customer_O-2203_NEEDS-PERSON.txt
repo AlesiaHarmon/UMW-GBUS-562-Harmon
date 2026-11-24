@@ -1,0 +1,21 @@
+Organization: copperline-coffee
+To: Elm State University Dining (order O-2203)
+Conditional notice: YES - the delay depends on a supplier option not yet chosen (Option B: all 200 on day 13 (supplier's default): 1 days late; on time under any other option)
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - CONDITIONAL NOTICE: the supplier offered options and none is chosen yet; this delay depends on the option chosen.
+  - Order has a late penalty.
+------------------------------------------------------------
+Subject: Update on Your Order O-2203
+
+Dear Elm State University Dining,
+
+We're writing about your order O-2203 for 50 units of the Cafe One.
+
+We apologize — a delay in a part from one of our suppliers may affect this order's shipping timeline. At this time, we want to let you know the order may ship up to 1 day later than originally planned. This is not yet certain, as it depends on a decision we have not finalized.
+
+We will confirm the exact ship date as soon as we have more information, and we appreciate your patience in the meantime.
+
+Thank you for your understanding.
+
+Customer Service, Copperline Coffee Machines

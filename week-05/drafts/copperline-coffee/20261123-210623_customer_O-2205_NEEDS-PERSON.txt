@@ -1,0 +1,17 @@
+Organization: copperline-coffee
+To: Tall Pines Coffee House (order O-2205)
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - Order has a late penalty.
+------------------------------------------------------------
+Subject: Update on Your Order O-2205
+
+Dear Tall Pines Coffee House,
+
+We're writing to update you on order O-2205 for 25 units of the Cafe One. The order is now expected to ship 2 days later than originally planned.
+
+We apologize for the delay. It is due to a delay in a part from one of our suppliers.
+
+Thank you for your patience, and please reach out if you have any questions.
+
+Customer Service, Copperline Coffee Machines

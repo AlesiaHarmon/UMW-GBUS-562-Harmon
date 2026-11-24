@@ -1,0 +1,21 @@
+Organization: copperline-coffee
+To: supplier
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - Affects orders with a late penalty: O-2203, O-2205
+------------------------------------------------------------
+Subject: RE: PO-5512 - PU-20 pumps - partial shipment
+
+Hello Diane,
+
+Thank you for the update. To confirm our understanding: of the 200 PU-20 pumps on PO-5512, 40 will still arrive on day 4 as scheduled, with the remaining 160 now arriving on day 19 instead.
+
+This shortfall will delay 3 of our orders, with lateness ranging from 2 to 7 days depending on the order.
+
+We're not able to share customer names or order details, but we can tell you the impact in units and days as above if that's helpful for your planning.
+
+To help reduce the delay, is there any way to expedite even a portion of the remaining 160 units sooner than day 19? Any partial early shipments would help us reduce the impact on our side.
+
+Thank you for flagging this promptly.
+
+Purchasing, Copperline Coffee Machines

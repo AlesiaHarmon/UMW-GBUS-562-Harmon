@@ -1,0 +1,21 @@
+Organization: copperline-coffee
+To: supplier
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - Affects orders with a late penalty: O-2203, O-2205
+------------------------------------------------------------
+Subject: RE: PO-5512 - PU-20 pumps - partial shipment
+
+Hello Diane,
+
+Thank you for the update. To confirm our understanding: PO-5512 will now arrive in two parts — 40 PU-20 pumps on day 4 as originally scheduled, and the remaining 160 pumps on day 19.
+
+This split shipment will delay 3 of our orders, by 2 to 7 days depending on the order.
+
+Regarding your question, we're not able to share customer details. What we can say is the above delay impact.
+
+To help reduce this delay, is there any way to expedite a portion of the remaining 160 units sooner than day 19? Any earlier partial delivery would help us minimize the impact.
+
+Thank you for your cooperation.
+
+Purchasing, Copperline Coffee Machines

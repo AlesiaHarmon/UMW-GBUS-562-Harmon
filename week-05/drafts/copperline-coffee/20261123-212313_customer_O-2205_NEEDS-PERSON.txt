@@ -1,0 +1,21 @@
+Organization: copperline-coffee
+To: Tall Pines Coffee House (order O-2205)
+Conditional notice: YES - the delay depends on a supplier option not yet chosen (Option A: 80 on day 7, 120 on day 21: 4 days late; on time under any other option)
+Reviewer: APPROVE after 0 revision(s)
+Needs a person: YES
+  - CONDITIONAL NOTICE: the supplier offered options and none is chosen yet; this delay depends on the option chosen.
+  - Order has a late penalty.
+------------------------------------------------------------
+Subject: Update on Your Order O-2205
+
+Dear Tall Pines Coffee House,
+
+We're writing about your order O-2205 for 25 units of the Cafe One.
+
+Due to a delay in a part from one of our suppliers, your order may ship up to 4 days later than originally planned. We have not yet made a final decision on the timing, and we will confirm the exact ship date with you as soon as it is set.
+
+We apologize for the uncertainty this may cause.
+
+Thank you for your patience, and we'll be in touch soon with a confirmed date.
+
+Customer Service, Copperline Coffee Machines

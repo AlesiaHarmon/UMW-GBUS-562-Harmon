@@ -1,0 +1,25 @@
+Organization: copperline-coffee
+Supplier email: week-05\copperline-coffee\supplier-emails\04-pelham-maintenance-closure.eml
+    [tokens] orchestrator: 1368 input, 279 output this call (total 1368 input, 279 output in 1 calls)
+
+######################################################################
+# CHOICE 1 of 10: finish {"summary": "Pelham Fittings notified of a one-week plant maintenance closure starting in four weeks, but confirmed that our open order PO-5540 (60 SW-3 steam wands) ships before the closure and will arrive on schedule. No impact to our orders, no reply or customer notice needed.", "decision_needed": false}
+######################################################################
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 0
+
+Drafts marked for a person: 0
+
+Decisions for a person: 0
+
+=== TOKENS USED BY EACH SPECIALIST
+  orchestrator      1 calls     1368 input     279 output
+  all                           1368 input     279 output
+
+Orchestrator's summary for a person:
+  Pelham Fittings notified of a one-week plant maintenance closure starting in four weeks, but confirmed that our open order PO-5540 (60 SW-3 steam wands) ships before the closure and will arrive on schedule. No impact to our orders, no reply or customer notice needed.
+  A person must make a decision: no

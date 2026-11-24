@@ -1,15 +1,17 @@
-"""Brookfield Bicycle Company's fixed pipeline for one supplier email.
+"""A fixed pipeline for one supplier email, for one organization.
 
 Runs the specialists from specialists.py in a fixed order:
     1. The supply analyst.
     2. A customer notice for each order at risk (skipped if there are none).
     3. A reply to the supplier.
 Every draft goes through the review step (writer -> reviewer -> up to 2 revisions ->
-name check) and is saved in week-05/drafts. At the end it prints a summary: drafts
+name check) and is saved in week-05/drafts/<org>. At the end it prints a summary: drafts
 saved, drafts marked for a person, decisions for a person, and total tokens.
 
-From the top of the repository:
+--org picks the organization folder in week-05 (default brookfield-bikes). From the top
+of the repository:
     .venv\\Scripts\\python.exe week-05\\pipeline.py --email week-05\\brookfield-bikes\\supplier-emails\\01-northgate-controller-delay.eml
+    .venv\\Scripts\\python.exe week-05\\pipeline.py --org copperline-coffee --email week-05\\copperline-coffee\\supplier-emails\\01-danforth-pump-delay.eml
 Add --save run.txt to also write everything printed to run.txt (UTF-8).
 """
 
@@ -22,6 +24,7 @@ import anthropic
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import specialists  # noqa: E402  (found beside this file, whatever the working folder)
 from specialists import SpecialistError  # noqa: E402
+from supply_tools import SupplyError  # noqa: E402
 
 
 class Tee:
@@ -49,6 +52,7 @@ def step(number, title):
 def run(email_path):
     """The three steps for one email. Returns (brief or None, results, stop reason or None)."""
     email = email_path.read_text(encoding="utf-8")
+    print(f"Organization: {specialists.ORG}")
     print(f"Supplier email: {email_path}")
     brief, results = None, []
     try:
@@ -66,7 +70,7 @@ def run(email_path):
         step(3, "reply to the supplier")
         results.append(specialists.reviewed_supplier_reply(email, brief))
         return brief, results, None
-    except SpecialistError as exc:
+    except (SpecialistError, SupplyError) as exc:
         return brief, results, str(exc)
     except anthropic.AuthenticationError:
         return brief, results, "Claude rejected the API key."
@@ -107,12 +111,17 @@ def summary(brief, results, stopped):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run Brookfield's specialists on one supplier email.")
+    parser = argparse.ArgumentParser(description="Run an organization's specialists on one supplier email.")
+    specialists.add_org_argument(parser)
     parser.add_argument("--email", required=True, type=Path, help="path of one supplier email")
     parser.add_argument("--save", type=Path, help="also write everything printed to this text file (UTF-8)")
     args = parser.parse_args()
     if not args.email.is_file():
         sys.exit(f"No email file at {args.email}")
+    try:
+        specialists.set_org(args.org)
+    except SpecialistError as exc:
+        sys.exit(str(exc))
 
     save_file = None
     if args.save:

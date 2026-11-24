@@ -1,7 +1,7 @@
-"""Brookfield Bicycle Company's orchestrator: Claude decides which specialists to use.
+"""An organization's orchestrator: Claude decides which specialists to use.
 
-An agent (claude-sonnet-5) gets the system prompt in brookfield-bikes/prompts/orchestrator.txt
-and four tools:
+An agent (claude-sonnet-5) gets the system prompt in <org>/prompts/orchestrator.txt
+(--org, default brookfield-bikes) and four tools:
     run_supply_analyst      runs the supply analyst on the email; returns its brief
     draft_supplier_reply    supplier reply from the brief, through the review step
     draft_customer_notice   notice for one order at risk (by order ID), through the review step
@@ -11,11 +11,13 @@ pipeline.py.
 
 From the top of the repository:
     .venv\\Scripts\\python.exe week-05\\orchestrator.py --email week-05\\brookfield-bikes\\supplier-emails\\01-northgate-controller-delay.eml
+    .venv\\Scripts\\python.exe week-05\\orchestrator.py --org copperline-coffee --email week-05\\copperline-coffee\\supplier-emails\\01-danforth-pump-delay.eml
 Add --save run.txt to also write everything printed to run.txt (UTF-8).
 """
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -25,6 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import specialists  # noqa: E402
 from pipeline import Tee, summary  # noqa: E402
 from specialists import SpecialistError  # noqa: E402
+from supply_tools import SupplyError  # noqa: E402
 
 MAX_TOOL_CALLS = 10
 
@@ -67,13 +70,31 @@ TOOLS = [
         "description": "End the job. Call it once, last.",
         "input_schema": schema({
             "summary": {"type": "string",
-                        "description": "A short summary for Brookfield's purchasing manager."},
+                        "description": "A short summary for the purchasing manager."},
             "decision_needed": {"type": "boolean",
                                 "description": "True if a person must make a decision."},
         }, ["summary", "decision_needed"]),
         "strict": True,
     },
 ]
+
+
+# Tool-call syntax that sometimes leaks into a text field, such as "</parameter>".
+MARKUP = re.compile(r"</?\s*(?:parameter|invoke|function_calls|tool_use|antml)\b", re.IGNORECASE)
+
+
+def finish_problem(args):
+    """Why a finish call can't be accepted (None if it can): the summary must be clean
+    plain text and decision_needed a real true/false."""
+    summary = args.get("summary")
+    if not isinstance(summary, str) or not summary.strip():
+        return "finish needs a non-empty summary. Call finish again with a plain-text summary."
+    if MARKUP.search(summary):
+        return ("The summary contains tool-call markup (such as </parameter>). Call finish again "
+                "with a plain-text summary only, and decision_needed as its own field.")
+    if not isinstance(args.get("decision_needed"), bool):
+        return "decision_needed must be true or false. Call finish again."
+    return None
 
 
 class Job:
@@ -117,7 +138,10 @@ class Job:
             return self.record(order_id, result), False
 
         if name == "finish":
-            self.finished = (str(args.get("summary", "")).strip(), bool(args.get("decision_needed")))
+            problem = finish_problem(args)
+            if problem:
+                return problem, True
+            self.finished = (args["summary"].strip(), args["decision_needed"])
             return "Finished.", False
 
         return f"Unknown tool: {name}", True
@@ -132,6 +156,7 @@ class Job:
 def run(email_path):
     """The orchestrator's loop. Returns (job, stop reason or None)."""
     email = email_path.read_text(encoding="utf-8")
+    print(f"Organization: {specialists.ORG}")
     print(f"Supplier email: {email_path}")
     job = Job(email)
     client = specialists.client()
@@ -181,7 +206,7 @@ def run(email_path):
             print("#" * 70)
             try:
                 text, is_error = job.run_tool(block.name, block.input)
-            except SpecialistError as exc:
+            except (SpecialistError, SupplyError) as exc:
                 text, is_error = f"The specialist failed: {exc}", True
             except anthropic.APIError as exc:
                 return job, f"Claude API error in {block.name}: {exc}"
@@ -198,13 +223,18 @@ def run(email_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Let Claude coordinate Brookfield's specialists "
-                                                 "for one supplier email.")
+    parser = argparse.ArgumentParser(description="Let Claude coordinate an organization's "
+                                                 "specialists for one supplier email.")
+    specialists.add_org_argument(parser)
     parser.add_argument("--email", required=True, type=Path, help="path of one supplier email")
     parser.add_argument("--save", type=Path, help="also write everything printed to this text file (UTF-8)")
     args = parser.parse_args()
     if not args.email.is_file():
         sys.exit(f"No email file at {args.email}")
+    try:
+        specialists.set_org(args.org)
+    except SpecialistError as exc:
+        sys.exit(str(exc))
 
     save_file = None
     if args.save:

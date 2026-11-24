@@ -1,0 +1,170 @@
+Organization: copperline-coffee
+Supplier email: week-05\copperline-coffee\supplier-emails\03-ashgrove-burr-delay.eml
+
+######################################################################
+# STEP 1: supply analyst
+######################################################################
+
+=== HANDOFF  coordinator -> analyst: supplier email (copperline-coffee)
+From: Priya Raman <p.raman@ashgroveprecision.example>
+To: Purchasing <purchasing@copperlinecoffee.example>
+Subject: PO-5531 - BR-64 burr sets - arriving 3 days late
+
+Hello,
+
+A heat-treatment furnace at our plant needed an unplanned repair, so PO-5531
+for 120 BR-64 burr sets will arrive 3 days after the scheduled date. The full
+quantity will ship together.
+
+Please let me know if this causes any problems on your side.
+
+Best,
+Priya Raman
+Order Management, Ashgrove Precision
+    [tokens] analyst: 2512 input, 170 output this call (total 2512 input, 170 output in 1 calls)
+
+=== HANDOFF  analyst -> MCP tool get_part: tool call 1 of 10
+{
+  "part_id": "BR-64"
+}
+    [result] 318 characters
+
+=== HANDOFF  analyst -> MCP tool get_orders_for_part: tool call 2 of 10
+{
+  "part_id": "BR-64"
+}
+    [result] 780 characters
+    [tokens] analyst: 3259 input, 130 output this call (total 5771 input, 300 output in 2 calls)
+
+=== HANDOFF  analyst -> MCP tool check_coverage: tool call 3 of 10
+{
+  "part_id": "BR-64",
+  "arrivals": [
+    {
+      "qty": 120,
+      "arrives_in_days": 13
+    }
+  ]
+}
+    [result] 1138 characters
+    [tokens] analyst: 3894 input, 190 output this call (total 9665 input, 490 output in 3 calls)
+
+=== HANDOFF  analyst -> coordinator: full brief (JSON)
+{
+  "part_id": "BR-64",
+  "what_changed": "PO-5531's 120 BR-64 burr sets will now arrive on day 13 instead of day 10 (3 days late), shipping as a single full quantity.",
+  "orders_at_risk": [],
+  "options": [],
+  "decisions_for_a_person": [],
+  "supplier_questions": [
+    "Please let us know if this causes any problems on your side."
+  ]
+}
+
+=== HANDOFF  code -> coordinator: brief checked against 1 check_coverage result(s)
+{
+  "corrections": "none",
+  "problems": "none"
+}
+
+######################################################################
+# STEP 2: customer notices - skipped, no orders at risk
+######################################################################
+
+######################################################################
+# STEP 3: reply to the supplier
+######################################################################
+
+=== HANDOFF  coordinator -> supplier writer: email and sanitized brief (no customer names, order IDs, penalties or internal decisions; impact computed in code)
+Supplier email:
+From: Priya Raman <p.raman@ashgroveprecision.example>
+To: Purchasing <purchasing@copperlinecoffee.example>
+Subject: PO-5531 - BR-64 burr sets - arriving 3 days late
+
+Hello,
+
+A heat-treatment furnace at our plant needed an unplanned repair, so PO-5531
+for 120 BR-64 burr sets will arrive 3 days after the scheduled date. The full
+quantity will ship together.
+
+Please let me know if this causes any problems on your side.
+
+Best,
+Priya Raman
+Order Management, Ashgrove Precision
+
+
+Supply analyst's brief:
+{
+  "part_id": "BR-64",
+  "what_changed": "PO-5531's 120 BR-64 burr sets will now arrive on day 13 instead of day 10 (3 days late), shipping as a single full quantity.",
+  "impact": {
+    "orders_delayed": 0
+  },
+  "impact_note": "Worked out in code from the analyst's order data. State the impact only with these numbers (how many orders are delayed, and the fewest to the most days late); don't work out your own.",
+  "options": [],
+  "supplier_questions": [
+    "Please let us know if this causes any problems on your side."
+  ]
+}
+    [tokens] supplier writer: 705 input, 215 output this call (total 705 input, 215 output in 1 calls)
+
+=== HANDOFF  supplier writer -> coordinator: supplier draft
+(99 words; the final draft is printed after the review)
+
+=== HANDOFF  coordinator -> reviewer: supplier draft and its facts
+Facts:
+{
+  "supplier_email": "From: Priya Raman <p.raman@ashgroveprecision.example>\nTo: Purchasing <purchasing@copperlinecoffee.example>\nSubject: PO-5531 - BR-64 burr sets - arriving 3 days late\n\nHello,\n\nA heat-treatment furnace at our plant needed an unplanned repair, so PO-5531\nfor 120 BR-64 burr sets will arrive 3 days after the scheduled date. The full\nquantity will ship together.\n\nPlease let me know if this causes any problems on your side.\n\nBest,\nPriya Raman\nOrder Management, Ashgrove Precision\n",
+  "brief": {
+    "part_id": "BR-64",
+    "what_changed": "PO-5531's 120 BR-64 burr sets will now arrive on day 13 instead of day 10 (3 days late), shipping as a single full quantity.",
+    "impact": {
+      "orders_delayed": 0
+    },
+    "impact_note": "Worked out in code from the analyst's order data. State the impact only with these numbers (how many orders are delayed, and the fewest to the most days late); don't work out your own.",
+    "options": [],
+    "supplier_questions": [
+      "Please let us know if this causes any problems on your side."
+    ]
+  }
+}
+Draft: the latest supplier draft (99 words; the final draft is printed after the review)
+    [tokens] reviewer: 1004 input, 437 output this call (total 1004 input, 437 output in 1 calls)
+
+=== HANDOFF  reviewer -> coordinator: verdict APPROVE
+(no reasons given)
+
+FINAL DRAFT TO SUPPLIER
+Subject: RE: PO-5531 - BR-64 burr sets - arriving 3 days late
+
+Hello Priya,
+
+Thank you for the update. To confirm: PO-5531 (120 BR-64 burr sets) will now arrive on day 13 instead of day 10, a 3-day delay, shipping as a single full quantity.
+
+Based on our current schedule, this delay does not put any of our orders behind, so there's no impact on our end at this time.
+
+That said, if there's any way to ship even a partial quantity sooner, we'd welcome it to protect our buffer against further disruption.
+
+Best regards,
+Purchasing, Copperline Coffee Machines
+Marked for a person: no
+
+=== SAVED  week-05/drafts/copperline-coffee/20261123-212452_supplier_BR-64.txt
+
+======================================================================
+SUMMARY
+======================================================================
+
+Drafts saved: 1
+  - 20261123-212452_supplier_BR-64.txt  (supplier; reviewer APPROVE, 0 revision(s))
+
+Drafts marked for a person: 0
+
+Decisions for a person: 0
+
+=== TOKENS USED BY EACH SPECIALIST
+  analyst           3 calls     9665 input     490 output
+  supplier writer   1 calls      705 input     215 output
+  reviewer          1 calls     1004 input     437 output
+  all                          11374 input    1142 output
